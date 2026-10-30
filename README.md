@@ -9,15 +9,15 @@ Due strumenti per prepararsi all'orale (Dottorato in Studi Internazionali, proge
 | 🗺️ **La porta dei post-it** (mappa concettuale) | [Apri la mappa](https://claude.ai/artifact/U9hCUTuKSyKjjoFjKBPTKW) | [docs/mappa-postit.html](docs/mappa-postit.html) |
 | 🎤 **Allenamento all'orale** (domande e punti deboli) | [Apri l'app](https://claude.ai/artifact/RuWx7KfvRMZrR8UZVdr5CR) | [docs/allenamento-orale.html](docs/allenamento-orale.html) |
 
-**Il modo più rapido** è il link claude.ai: si apre nel browser del computer o del telefono, con l'account Claude.
-
-**Dal repository:** su GitHub un file `.html` si vede come codice, non come pagina. Per aprirlo scarica il file (pulsante *Download raw file*) e aprilo con il browser.
-
-**Come sito web (facoltativo):** il repository è privato, e con un account GitHub gratuito le Pages funzionano solo sui repository pubblici. Se lo rendi pubblico, vai in *Settings → Pages*, scegli *Branch: main* e cartella */docs*. Le pagine saranno allora su:
+**Come sito web (GitHub Pages):** dopo aver attivato le Pages (*Settings → Pages → Branch: main, cartella /docs*), le pagine si aprono da qualsiasi browser, anche dal telefono e senza account:
 
 - https://vignini.github.io/sentiment/ (indice)
 - https://vignini.github.io/sentiment/mappa-postit.html
 - https://vignini.github.io/sentiment/allenamento-orale.html
+
+**Su claude.ai:** i link della tabella aprono le versioni pubblicate, con l'account Claude.
+
+**Dal repository:** su GitHub un file `.html` si vede come codice; per aprirlo scaricalo (*Download raw file*) e aprilo con il browser.
 
 ## Guida
 
