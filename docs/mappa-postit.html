@@ -115,7 +115,7 @@ aside{position:sticky;top:80px;background:var(--surface);border:1px solid var(--
   .note:nth-child(n){transform:none}
   .board-head h2{font-size:22px}
   .maphint{display:block}
-  svg.map{width:680px;min-width:680px}
+  svg.map{width:860px;min-width:860px}
   aside{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:20;max-height:62vh;overflow-y:auto;border-radius:14px 14px 0 0;
     box-shadow:0 -10px 30px rgba(0,0,0,.25);padding:16px max(16px,env(safe-area-inset-right,0px)) calc(18px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));transform:translateY(105%);transition:transform .2s ease}
   aside.open{transform:none}
@@ -164,7 +164,7 @@ aside .why{font-size:13px;color:var(--muted)}
     <h2 id="maph">Il filo tra gli autori</h2>
     <p class="small">Clicca un autore per saltare ai suoi post-it. Le frecce riassumono i passaggi del tuo testo di contesto.</p>
     <p class="small maphint">Sul telefono scorri la mappa di lato →</p>
-    <div class="mapscroll"><svg class="map" id="map" viewBox="0 0 1000 430" role="img" aria-label="Mappa dei legami tra autori"></svg></div>
+    <div class="mapscroll"><svg class="map" id="map" viewBox="0 0 1260 430" role="img" aria-label="Mappa dei legami tra autori"></svg></div>
   </section>
 
   <section aria-labelledby="qh" style="display:flex;flex-direction:column;gap:12px">
@@ -216,7 +216,11 @@ const AUTHORS = {
   mohanty:{name:"Mohanty", ref:"Under Western Eyes, 1984", c:"--green",
     thesis:"Siamo ancora nel potere epistemico, portato sulla questione di genere: la \"donna del Terzo Mondo\" come soggetto unico, passivo e vulnerabile è un prodotto dello sguardo occidentale."},
   chilisa:{name:"Chilisa", ref:"Indigenous Research Methodologies, 2020", c:"--salmon",
-    thesis:"I metodi non sono neutrali. Paradigma relazionale: gli attori partecipano alla definizione delle domande, delle categorie, dell'interpretazione e dell'uso dei risultati."}
+    thesis:"I metodi non sono neutrali. Paradigma relazionale: gli attori partecipano alla definizione delle domande, delle categorie, dell'interpretazione e dell'uso dei risultati."},
+  tamale:{name:"Tamale", ref:"Decolonization and Afro-Feminism, 2020 · Uganda", c:"--yellow",
+    thesis:"Intersezionalità delle lotte: la decolonizzazione deve essere anche femminista e il femminismo africano anche decoloniale, perché le oppressioni non funzionano separatamente."},
+  arora:{name:"Arora-Jonsson", ref:"Virtue and vulnerability, 2011", c:"--blue",
+    thesis:"Nel nesso tra clima e genere: le donne sono raccontate come vittime vulnerabili o come salvatrici virtuose dell'ambiente. Invece di \"aggiungere le donne\", bisogna analizzare le relazioni di genere che il cambiamento climatico produce."}
 };
 
 // u: trascrizione incerta · imp: segnato IMP · crit: idea criticata (barrata)
@@ -341,6 +345,20 @@ const NOTES = [
   {id:"c8",a:"chilisa",t:"Domande ④ ⑤",d:"④ Le interpretazioni restano nelle mani dei ricercatori? ⑤ I risultati restano nell'accademia senza tornare alla comunità?"},
   {id:"c9",a:"chilisa",t:"Ontologia · Epistemologia · Assiologia · Metodologia",d:"Ontologia: cos'è la realtà? … Metodologia: come produciamo conoscenza?"},
   {id:"c10",a:"chilisa",t:"\"Dare voce\"",d:"…come se fosse una concessione del ricercatore."},
+  {id:"k1",a:"tamale",t:"Intersezionalità",d:"La decolonizzazione deve essere anche femminista.",imp:1},
+  {id:"k2",a:"tamale",t:"Il femminismo africano deve essere anche decoloniale",d:""},
+  {id:"k3",a:"tamale",t:"Le oppressioni non funzionano separatamente",d:""},
+  {id:"k4",a:"tamale",t:"Le comunità sono attraversate da differenze strutturali profonde",d:"…che vanno considerate dagli interventi che vogliono lavorare su tali disuguaglianze."},
+  {id:"k5",a:"tamale",t:"Non romanticizzare i saperi locali",d:""},
+  {id:"a1",a:"arora",t:"Anche sul rapporto tra genere e cambiamento climatico",d:"Il potere epistemico e l'intersezionalità arrivano al nesso clima–genere."},
+  {id:"a2",a:"arora",t:"Invece di \"aggiungere le donne\"…",d:"…analizzare le relazioni di genere che il cambiamento climatico crea."},
+  {id:"a3",a:"arora",t:"Individua 2 rappresentazioni ricorrenti",d:"① Le donne come più vulnerabili al cambiamento climatico."},
+  {id:"a4",a:"arora",t:"② Le donne come naturalmente più virtuose",d:"…nei confronti dell'ambiente."},
+  {id:"a5",a:"arora",t:"① Donna come vittima · ② Donna come soluzione",d:""},
+  {id:"a6",a:"arora",t:"→ Donne rappresentate come categoria omogenea",d:""},
+  {id:"a7",a:"arora",t:"Il problema non è stabilire se siano vulnerabili o virtuose…",d:"…ma comprendere quali relazioni producono vulnerabilità e possibilità/capacità di azione."},
+  {id:"a8",a:"arora",t:"Dare alle donne più responsabilità senza maggior potere",d:""},
+  {id:"a9",a:"arora",t:"Trasformazione o sovraccarico?",d:""},
 ];
 
 const QUESTIONS = [
@@ -416,6 +434,21 @@ const LINKS = [
   ["y5","e9","Il binario vittime/oppressori, come la coppia esperto/povero, lascia le donne oggetto e non soggetto."],
   ["y6","g12","Guardare il potere senza ridurre le donne a vittime: chi, tra le donne, accede a risorse e decisioni?"],
   ["y0","y1",""],
+  ["k1","n2","Tamale porta la decolonialità di Ndlovu-Gatsheni dentro il femminismo: non c'è l'una senza l'altro."],
+  ["k2","k1",""],
+  ["k3","y5","Se le oppressioni si intrecciano, il binario vittime/oppressori di cui diffida Mohanty non regge."],
+  ["k4","y4","Come la \"donna del Terzo Mondo\", anche \"la comunità\" non è un soggetto unitario: va guardata nelle sue disuguaglianze."],
+  ["k5","e10","Pluriverso sì, ma senza idealizzare: anche i saperi locali contengono gerarchie."],
+  ["k5","c6",""],
+  ["k3","a1","L'intersezionalità applicata al nesso tra genere e clima."],
+  ["a2","a1",""],
+  ["a3","a4",""],
+  ["a5","y5","Vittima o soluzione: due facce dello stesso sguardo esterno che Mohanty critica."],
+  ["a6","y4","La donna come categoria omogenea: la stessa critica di Mohanty, applicata al clima."],
+  ["a7","l9","Non chiedersi se le donne sono vulnerabili, ma quali relazioni aprono o chiudono la loro capacità di agire."],
+  ["a8","g12","Più responsabilità senza potere: è proprio la dimensione che vuoi aggiungere all'Ecological Framework."],
+  ["a9","a8",""],
+  ["a7","q1","Il cambiamento accade nelle relazioni di genere che l'intervento sposta."],
 ];
 
 // Sotto-domande del progetto e lettura del caso West Pokot (proposte di Claude, da riscrivere con parole tue)
@@ -435,6 +468,8 @@ const LENS = {
   escobar:{sq:[2],wp:"Categorie come \"vulnerabilità\" e \"insicurezza alimentare\" hanno costruito la comunità come mancante di agricoltura. Il pluriverso mi chiede di prendere sul serio la pastorizia come forma di vita e di conoscenza, non come stadio da superare."},
   ndlovu:{sq:[2,3],wp:"Chi ha definito il problema e la soluzione a West Pokot? E chi ha avuto l'autorità di chiamarlo fallimento? La libertà epistemica significa che la comunità possa definire con i propri concetti cosa è cambiato. Come ricercatrice europea, bianca e cooperante sono dentro queste gerarchie, non fuori."},
   mohanty:{sq:[2],wp:"A West Pokot il progetto descriveva le donne come beneficiarie vulnerabili della siccità. Mohanty mi chiede di non partire da quella categoria esterna: alla fontana le donne hanno costruito un loro spazio e nuove forme di socialità. Quali donne, però? Chi è entrata nel comitato dell'acqua e chi è rimasta fuori? Né solo vittime né eroine."},
+  tamale:{sq:[2],wp:"A West Pokot la comunità agro-pastorale non è un blocco unico: genere, età, clan e ricchezza in bestiame si intrecciano. Tamale mi chiede di leggere insieme queste oppressioni e di non romanticizzare i saperi locali: anche lì ci sono gerarchie. La mia ricerca decoloniale deve essere anche femminista."},
+  arora:{sq:[1,2],wp:"Il progetto ha trattato le donne come le più vulnerabili alla siccità. Io non voglio decidere se siano vittime o soluzione, ma capire quali relazioni la fontana e il comitato dell'acqua hanno spostato. Le donne hanno avuto più potere o solo più responsabilità sulla gestione dell'acqua? Trasformazione o sovraccarico?"},
   chilisa:{sq:[2,3],wp:"Il ritorno a West Pokot non deve essere knowledge mining: domande e dimensioni dell'Ecological Framework definite insieme, laboratori partecipativi per rivedere le categorie, interpretazione condivisa e restituzione alla comunità nella fase finale."}
 };
 
@@ -445,10 +480,10 @@ const linksOf = id => LINKS.filter(l=>l[0]===id||l[1]===id).map(l=>({other:l[0]=
 // ---------- mappa SVG ----------
 const NS="http://www.w3.org/2000/svg";
 const map=document.getElementById("map");
-const POS={hirschman:[100,110],woolcock:[100,250],long:[370,110],mosse:[370,250],ferguson:[370,390],stame:[640,110],saggiomo:[640,250],escobar:[640,390],ndlovu:[900,250],chilisa:[900,390],mohanty:[900,110]};
+const POS={hirschman:[100,110],woolcock:[100,250],long:[370,110],mosse:[370,250],ferguson:[370,390],stame:[640,110],saggiomo:[640,250],escobar:[640,390],ndlovu:[900,250],chilisa:[900,390],mohanty:[900,110],tamale:[1160,110],arora:[1160,250]};
 function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||map).appendChild(e);return e}
 const defs=el("defs",{});const mk=el("marker",{id:"arr",viewBox:"0 0 10 10",refX:"9",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"},defs);el("path",{d:"M0,0L10,5L0,10z",fill:"var(--muted)"},mk);
-const EDGES=[["hirschman","woolcock","traiettorie"],["hirschman","long","oltre il piano"],["hirschman","stame","possibilismo, sorpresa",1],["long","mosse","chi rende ufficiale?"],["mosse","ferguson","effetti politici"],["ferguson","escobar","il discorso"],["stame","saggiomo","dove osservare"],["escobar","ndlovu","decolonialità"],["ndlovu","chilisa","al metodo"],["ndlovu","mohanty","genere"]];
+const EDGES=[["hirschman","woolcock","traiettorie"],["hirschman","long","oltre il piano"],["hirschman","stame","possibilismo, sorpresa",1],["long","mosse","chi rende ufficiale?"],["mosse","ferguson","effetti politici"],["ferguson","escobar","il discorso"],["stame","saggiomo","dove osservare"],["escobar","ndlovu","decolonialità"],["ndlovu","chilisa","al metodo"],["ndlovu","mohanty","genere"],["mohanty","tamale","intrecci"],["tamale","arora","clima"]];
 const W=170,H=56;
 EDGES.forEach(([a,b,lbl,arc])=>{const [x1,y1]=POS[a],[x2,y2]=POS[b];
   if(arc){el("path",{d:`M${x1},${y1-H/2-2} Q${(x1+x2)/2},${y1-H-40} ${x2},${y2-H/2-4}`,class:"edge","marker-end":"url(#arr)"});el("text",{x:(x1+x2)/2,y:y1-H-36,class:"edgelbl","text-anchor":"middle"}).textContent=lbl;return}
@@ -458,7 +493,7 @@ EDGES.forEach(([a,b,lbl,arc])=>{const [x1,y1]=POS[a],[x2,y2]=POS[b];
 Object.entries(POS).forEach(([k,[x,y]])=>{const g=el("g",{class:"mapnode",id:"mn-"+k,tabindex:"0",role:"link","aria-label":"Vai a "+AUTHORS[k].name});
   el("rect",{x:x-W/2,y:y-H/2,width:W,height:H,rx:3,fill:`var(${AUTHORS[k].c})`},g);
   const t=el("text",{x,y:y-2,"text-anchor":"middle","font-size":"18"},g);t.textContent=AUTHORS[k].name;
-  const s=el("text",{x,y:y+17,"text-anchor":"middle",class:"sub"},g);s.textContent=NOTES.filter(n=>n.a===k).length+" post-it"+(["long","ferguson","escobar"].includes(k)?" · potere":k==="mohanty"?" · potere epistemico":"");
+  const s=el("text",{x,y:y+17,"text-anchor":"middle",class:"sub"},g);s.textContent=NOTES.filter(n=>n.a===k).length+" post-it"+(["long","ferguson","escobar"].includes(k)?" · potere":k==="mohanty"?" · potere epistemico":k==="tamale"?" · intersezionalità":k==="arora"?" · clima e genere":"");
   const go=()=>document.getElementById("b-"+k).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
   g.addEventListener("click",go);g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});});
 
