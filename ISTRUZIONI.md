@@ -7,11 +7,11 @@ Due pagine HTML che funzionano nel browser, sia dal computer che dal telefono. I
 ## 1. La porta dei post-it (mappa concettuale)
 
 ### Il filo tra gli autori
-In alto c'è la mappa degli autori: Hirschman, Woolcock, Long, Mosse, Ferguson, Stame, Saggiomo, Escobar, Ndlovu-Gatsheni, Chilisa e Mohanty.
+In alto c'è la mappa degli autori: Hirschman, Woolcock, Long, Mosse, Ferguson, Stame, Saggiomo, Escobar, Ndlovu-Gatsheni, Chilisa, Mohanty e, per il genere, Tamale e Arora-Jonsson.
 
 - **Clicca un autore** per saltare ai suoi post-it.
 - **Le frecce** sono i passaggi del ragionamento, per esempio "oltre il piano", "chi rende ufficiale?", "il discorso" o "decolonialità". Prova a spiegare a voce ogni freccia.
-- **"· potere"** sotto il nome indica gli autori da cui viene la dimensione del potere: Long, Ferguson ed Escobar, più Mohanty con il potere epistemico.
+- **"· potere"** sotto il nome indica gli autori da cui viene la dimensione del potere: Long, Ferguson ed Escobar, più Mohanty con il potere epistemico. Sotto Tamale trovi "intersezionalità" e sotto Arora-Jonsson "clima e genere".
 
 ### I post-it
 Sotto la mappa ci sono i tuoi post-it, raggruppati per autore e con i colori originali.
