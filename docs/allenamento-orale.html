@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
+</head>
+<body>
+<title>Allenamento all'orale</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Gochi+Hand&display=swap">
+<style>
+/* Layout: una colonna di schede-domanda come cartoncini d'esame; in alto le schede Domande / Punti deboli / Interrogami e i filtri. */
+:root{
+  --bg:#ece9e4; --surface:#fbfaf7; --ink:#24211e; --muted:#6b645d; --line:#d3ccc3;
+  --card:#fffdf8; --mine:#0f6b63; --mine-bg:#e3f1ee; --warn:#9a3b12; --warn-bg:#f8e6dc; --ok:#2f6b2a;
+  --pink:#f7a8c4; --green:#c8ec6a; --blue:#7fd0f2; --yellow:#f6e7a1; --salmon:#f6b5a4;
+  --focus:#1c6dd0;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
+  --hand:"Gochi Hand","Comic Sans MS",cursive;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1b1917; --surface:#24211e; --ink:#efe9e2; --muted:#b0a69c; --line:#433d37; --card:#2a2622;
+  --mine:#6fd1c1; --mine-bg:#1d3532; --warn:#f0a07a; --warn-bg:#3a261d; --ok:#9fd890; --focus:#7db4ff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1b1917; --surface:#24211e; --ink:#efe9e2; --muted:#b0a69c; --line:#433d37; --card:#2a2622;
+  --mine:#6fd1c1; --mine-bg:#1d3532; --warn:#f0a07a; --warn-bg:#3a261d; --ok:#9fd890; --focus:#7db4ff; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 64px}
+.wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.eyebrow{font-family:var(--hand);font-size:20px;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,5vw,46px);line-height:1.05;margin:0;text-wrap:balance}
+.lead{margin:0;max-width:68ch}
+.small{font-size:13px;color:var(--muted)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabs button{border:0;background:none;color:var(--muted);font:700 15px var(--display);padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.filters{display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chips .lbl{font:700 11px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 12px var(--body);padding:5px 10px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip.sq[aria-pressed="true"]{background:var(--mine);border-color:var(--mine)}
+button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.progress{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress b{color:var(--ink)}
+.list{display:flex;flex-direction:column;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card.weak{border-color:var(--warn)}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag{font:700 11px var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.sqtag{font:700 11px var(--body);color:var(--mine);border:1px solid var(--mine);border-radius:999px;padding:1px 7px}
+.status{margin-left:auto;font:700 11px var(--body);letter-spacing:.04em;text-transform:uppercase}
+.status.ok{color:var(--ok)} .status.rev{color:var(--warn)}
+.q{font-family:var(--display);font-weight:700;font-size:20px;line-height:1.25;margin:0;text-wrap:balance}
+.critic{background:var(--warn-bg);border-radius:4px;padding:10px 12px;font-size:14px}
+.critic b{color:var(--warn)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--ink);background:var(--surface);color:var(--ink);font:700 13px var(--body);padding:7px 12px;border-radius:4px;cursor:pointer}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.timer{font:700 18px var(--display);font-variant-numeric:tabular-nums;min-width:56px}
+.timer.over{color:var(--warn)}
+.timer:empty{display:none}
+.answer{display:flex;flex-direction:column;gap:10px;border-top:1px dashed var(--line);padding-top:12px}
+.answer ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.cite{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cite span.p{font:600 12px var(--body);padding:3px 8px;border-radius:2px;color:#1f1a17;background:var(--c)}
+.note{font-size:12px;color:var(--muted);font-style:italic}
+.drill{display:flex;flex-direction:column;gap:14px}
+@media (max-width:600px){.chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.chip{white-space:nowrap;flex:0 0 auto;padding:7px 12px;font-size:13px}
+  .card{padding:14px}.q{font-size:18px}.btn{padding:9px 12px}.tabs button{padding:10px 10px;font-size:14px}}
+.empty{color:var(--muted);padding:20px;border:2px dashed var(--line);border-radius:6px;text-align:center}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:10px">
+    <div class="eyebrow">per il colloquio di dottorato · Eco-Log</div>
+    <h1>Allenamento all'orale</h1>
+    <p class="lead">Le domande più probabili sul tuo progetto, con una traccia di risposta costruita dai tuoi post-it e dal testo del progetto. Prima rispondi ad alta voce (hai 2 minuti), poi apri la traccia e segna se la sai.</p>
+    <p class="small">Le tracce le ho scritte io partendo dai tuoi materiali: usale come scaletta e riformulale con parole tue.</p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="t-q" aria-selected="true">Domande</button>
+    <button role="tab" id="t-w" aria-selected="false">Punti deboli</button>
+    <button role="tab" id="t-d" aria-selected="false">Interrogami</button>
+  </div>
+
+  <div class="filters">
+    <div class="chips" id="areas"><span class="lbl">Area</span></div>
+    <div class="chips" id="sqs"><span class="lbl">Sotto-domanda</span></div>
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <div class="list" id="list"></div>
+  <div class="drill" id="drill" hidden></div>
+</div>
+
+<script>
+const PC={mohanty:"--green",hirschman:"--green",woolcock:"--green",long:"--green",mosse:"--blue",stame:"--salmon",saggiomo:"--blue",ferguson:"--blue",escobar:"--yellow",ndlovu:"--salmon",chilisa:"--salmon",domande:"--yellow"};
+const SQL={1:"SQ1 Relazioni",2:"SQ2 Potere",3:"SQ3 Ecological Framework"};
+const AREAS={progetto:"Il progetto",teoria:"Teoria",metodo:"Metodo",etica:"Posizionamento ed etica",ef:"Ecological Framework"};
+
+// c: post-it da citare [autore, testo]
+const QS=[
+ {id:"p1",area:"progetto",sq:[1,2,3],q:"Mi presenta il suo progetto in tre minuti?",
+  a:["Parto dal campo: a West Pokot l'impianto di irrigazione da 36 ettari finanziato dall'UE non è mai stato usato per l'agricoltura, ma l'acqua ha fatto crescere erba per il pascolo e la fontana è diventata uno spazio delle donne.","Per il PCM è un fallimento; per me è un cambiamento che gli strumenti non sapevano riconoscere.","Domanda: come emerge il cambiamento nei processi locali di cooperazione e come può essere riconosciuto e accompagnato?","Tre sotto-domande: relazioni e pratiche, rapporti di potere, Ecological Framework.","Casi in Kenya, Kwale e West Pokot, all'incrocio tra clima e genere. Contributo: un framework da usare durante l'implementazione, dentro Eco-Log."],
+  c:[["domande","Il problema del \"piano\" è a monte!"],["hirschman","Effetti non intenzionali"]]},
+ {id:"p2",area:"progetto",sq:[1,2],q:"Perché proprio clima e genere?",
+  a:["Sono interventi ad alta densità causale (Woolcock): molti fattori interdipendenti, il quadro logico lineare è meno plausibile.","È dove la posta in gioco è più alta: il clima moltiplica le disuguaglianze di genere (Spotlight Initiative 2025).","Un ciclo di progetto che non riconosce queste trasformazioni rischia di aggravare le vulnerabilità che vuole ridurre.","Attenzione a non essenzializzare: le donne né vittime né custodi naturali (Arora-Jonsson)."],
+  c:[["woolcock","Densità causale"]]},
+ {id:"p3",area:"progetto",sq:[1],q:"Perché il Kenya, e perché due contee così diverse?",
+  a:["Un solo Paese per avere presenza continuativa e profondità, invece di un confronto ampio ma dispersivo.","Due sistemi socio-ecologici: Kwale, costiero (pesca, turismo, conservazione, terra) e West Pokot, ASAL agro-pastorale con scarsità d'acqua.","Lo stesso stress climatico prende forme diverse: posso confrontare come interagisce con contesti diversi.","Accesso al campo: cinque anni di lavoro nel Paese, CEFA, rete COIKE, organizzazioni locali."],c:[]},
+ {id:"p4",area:"progetto",sq:[3],q:"Qual è il contributo originale della sua ricerca?",
+  a:["La critica alla linearità è consolidata, ma gli strumenti operativi sono rimasti quasi invariati: lavoro in questo scarto.","Tradurre la critica in una metodologia da usare durante l'implementazione, non solo nella valutazione finale.","Estendere la Sentiment Evaluation di Saggiomo dalla diaspora alla cooperazione non diasporica.","Aggiungere in modo esplicito la dimensione del potere, che porto da Long, Ferguson ed Escobar."],
+  c:[["saggiomo","Questi criteri vanno integrati durante l'implementazione"],["saggiomo","Però sull'Ecological Framework va aggiunta la dimensione del potere"]]},
+ {id:"t1",area:"teoria",sq:[1,3],q:"La critica al PCM è nota da Hirschman in poi. Cosa aggiunge lei?",
+  a:["Lo riconosco: Hirschman (1967) e Woolcock (2013) hanno già messo in discussione la linearità.","Non butto via il PCM: ha la funzione di rendere esplicite le ipotesi.","Esistono approcci adattivi come la PDIA, ma resta aperta la questione di come registrare le trasformazioni emergenti e farle entrare nelle decisioni senza ricondurle agli indicatori iniziali.","Il mio contributo è operativo: uno strumento che affianca il PCM."],
+  c:[["hirschman","Pianificazione = incertezza strutturale"],["woolcock","PDIA"]]},
+ {id:"t2",area:"teoria",sq:[2],q:"Che differenza c'è tra Ferguson ed Escobar?",
+  a:["Ferguson: lo sviluppo come macchina antipolitica. Trasforma problemi politici in problemi tecnici e, anche quando fallisce, espande il potere burocratico.","Escobar allarga la critica: lo sviluppo è un discorso (Foucault) che ha prodotto il Terzo Mondo come oggetto da conoscere e correggere.","Ferguson guarda agli effetti di un apparato; Escobar alle categorie che rendono pensabile lo sviluppo stesso. Proposta: il pluriverso.","Insieme mi aprono la porta alla decolonialità."],
+  c:[["ferguson","Sviluppo come macchina antipolitica"],["escobar","Lo sviluppo produce il proprio oggetto"],["escobar","Escobar & Ferguson"]]},
+ {id:"t3",area:"teoria",sq:[1,3],q:"Che cos'è il Sentiment e perché sarebbe una forma di conoscenza?",
+  a:["È la forza affettiva e relazionale che lega gli attori a una causa o a un territorio, orientandone l'impegno e la capacità di agire insieme.","Quattro dimensioni: motivazioni, relazioni, spazi relazionali, creatività.","Non è un'impressione individuale presa per vera, ma conoscenza situata che coglie segnali deboli non ancora visti dagli indicatori.","Non conta quante volte la gente si incontra, ma se c'è fiducia e reciprocità."],
+  c:[["saggiomo","Il sentiment è la forza affettiva e relazionale…"],["saggiomo","Non quante volte la gente si è incontrata…"]]},
+ {id:"t4",area:"teoria",sq:[1,2],q:"Cosa prende da Mosse?",
+  a:["Politica ≠ pratica: le politiche non determinano ciò che accade sul campo.","Il progetto vive di mediazioni e traduzioni quotidiane; il PM ordina e seleziona.","La coerenza e il successo sono costruiti a posteriori.","Quindi chiedo non solo cosa è cambiato, ma chi ha l'autorità di attribuire quel cambiamento al progetto."],
+  c:[["mosse","Il successo di un progetto è una costruzione a posteriori"],["mosse","Potere = chi rende quell'interpretazione ufficiale"]]},
+ {id:"t5",area:"teoria",sq:[3],q:"Come usa Hirschman e Stame insieme?",
+  a:["Hirschman: le difficoltà impreviste attivano capacità latenti (hiding hand); possibilismo contro determinismo e ricette universali.","Stame porta il possibilismo nella valutazione: cercare ciò che è stato possibile senza presupporre che fosse probabile.","Dubbio e sorpresa diventano strumenti: la sorpresa apre un'indagine, non è ancora una prova.","Il valutatore etico dubita delle sue categorie e si fa sorprendere dal campo."],
+  c:[["hirschman","Hiding Hand"],["stame","La sorpresa ha valore conoscitivo"],["stame","Valutatore etico"]]},
+ {id:"t6",area:"teoria",sq:[2],q:"Colonialismo e colonialità, decolonizzazione e decolonialità: che differenza c'è?",
+  a:["Colonialismo: il dominio politico. Colonialità: la persistenza di strutture coloniali dopo la sua fine.","Decolonizzazione: la lotta contro il dominio coloniale. Decolonialità: un processo continuo di contestazione delle gerarchie coloniali.","La colonialità continua a organizzare potere, sapere, essere.","Libertà epistemica (Ndlovu-Gatsheni): poter produrre conoscenza a partire dalla propria collocazione."],
+  c:[["ndlovu","Colonialismo / colonialità"],["ndlovu","Libertà epistemica"]]},
+ {id:"t7",area:"teoria",sq:[2],q:"Cosa prende da Mohanty, e cosa c'entra con il potere epistemico?",
+  a:["È lo stesso potere epistemico di Escobar e Ndlovu-Gatsheni, portato sulla questione di genere.","Under Western Eyes (1984): lo sguardo occidentale è una posizione di potere epistemico. La \"donna del Terzo Mondo\" non esiste come soggetto unitario: è prodotta dal discorso accademico.","Quel racconto costruisce un modello binario: donne vittime, uomini oppressori. La vittimizzazione cancella l'agency.","Nella mia ricerca: non parto dalle donne come beneficiarie vulnerabili, ma chiedo quali donne accedono a risorse e decisioni, ad esempio nel comitato dell'acqua di West Pokot."],
+  c:[["mohanty","Under Western Eyes (1984)"],["mohanty","La vittimizzazione cancella l'agency"],["escobar","Lo sviluppo è il discorso che ha prodotto il 3° mondo"]]},
+ {id:"m1",area:"metodo",sq:[2],q:"Come rende osservabile il potere?",
+  a:["Su due piani: distribuzione di risorse e autorità, e potere epistemico di definire problemi e conoscenze legittime.","Esempio: le donne entrate per la prima volta nel comitato dell'acqua a West Pokot. Hanno ottenuto autorità o solo nuove responsabilità?","Confronto tra cambiamento previsto (documenti), osservato e percepito: chi decide quale versione diventa ufficiale.","Focus group differenziati per genere, età e accesso alle risorse, per far emergere conflitti di interpretazione."],
+  c:[["long","Non tutte le conoscenze possiedono la stessa autorità"],["mosse","Potere = chi rende quell'interpretazione ufficiale"]]},
+ {id:"m2",area:"metodo",sq:[1],q:"Qual è la sua unità di analisi?",
+  a:["Non il progetto, ma le traiettorie di cambiamento che lo attraversano (Woolcock 2009).","Lo stesso intervento può sembrare efficace o fallito a seconda di quando lo osservi: per questo il disegno è longitudinale.","Parto dalle traiettorie suggerite da letteratura ed esperienza come piste, cercando pattern senza cancellare le differenze di contesto."],
+  c:[["woolcock","Impact trajectory"]]},
+ {id:"m3",area:"metodo",sq:[1,2,3],q:"Come raccoglie e analizza i dati?",
+  a:["Disegno qualitativo, comparativo, longitudinale e partecipativo, con elementi di ricerca-azione ed etnografia impegnata.","Cinque fasi: analisi documentale; ingresso e definizione partecipata delle domande; osservazione, interviste e diario riflessivo; ritorni periodici; restituzione.","15-20 interviste semi-strutturate per caso e 2-3 focus group; lingue inglese, kiswahili, pokot con mediatori.","Codifica con software qualitativo: analisi tematica, processuale e comparativa."],c:[]},
+ {id:"e1",area:"etica",sq:[2],q:"Ha lavorato in quei progetti. Non è un problema per la sua ricerca?",
+  a:["È una risorsa per l'accesso al campo, ma anche oggetto di riflessività.","Sono una ricercatrice europea, bianca, inserita nella cooperazione: non sono esterna alle gerarchie che studio.","Il diario riflessivo serve proprio a registrare il mio posizionamento, dubbi ed emozioni.","Con Morin: non si comprende un processo restando completamente fuori. Cautela etica verso chi ha rapporti economici con i progetti."],
+  c:[["mosse","PM come mediatore"]]},
+ {id:"e2",area:"etica",sq:[2,3],q:"Cosa significa in pratica una ricerca decoloniale, nel suo caso?",
+  a:["La decolonialità è una pratica, non un'etichetta.","Domande e dimensioni del framework definite con le comunità; laboratori per rivedere le categorie; interpretazione condivisa e restituzione.","Evitare il knowledge mining: le persone non solo come fonti di dati.","Relazione soggetto → soggetto, non soggetto → oggetto. Senza idealizzare la comunità."],
+  c:[["ndlovu","La decolonialità è una pratica!"],["chilisa","Domande ① ② ③"],["ndlovu","Knowledge mining"]]},
+ {id:"f1",area:"ef",sq:[3],q:"Che cos'è l'Ecological Framework?",
+  a:["\"Ecologico\" si riferisce all'ecologia del contesto, non solo all'ambiente: un sistema vivo di relazioni sociali e di potere.","Quattro principi: partire da come l'intervento è interpretato localmente; rendere visibili i cambiamenti di potere; riconoscere effetti inattesi, sentiment e segnali deboli; poter riesaminare obiettivi e indicatori.","Affianca il PCM, non lo sostituisce. Richiede una leadership adattiva, non verticale."],
+  c:[["saggiomo","Però sull'Ecological Framework va aggiunta la dimensione del potere"]]},
+ {id:"f2",area:"ef",sq:[3],q:"In cosa differisce da PDIA, Most Significant Change o Outcome Harvesting?",
+  a:["La PDIA nasce per rafforzare le capacità istituzionali: io ne traduco i principi (problemi locali, iterazione) a livello comunitario.","Most Significant Change e Outcome Harvesting raccolgono cambiamenti e storie, soprattutto a posteriori.","L'Ecological Framework lavora durante l'implementazione, mette al centro relazioni e sentiment e rende esplicito il potere, compreso il potere di definire le categorie.","Nota: questo confronto con MSC e OH l'ho proposto io, verifica come vuoi posizionarti."],
+  c:[["woolcock","PDIA"]]},
+ {id:"f3",area:"ef",sq:[3],q:"È fattibile in tre anni?",
+  a:["Campo distribuito: 3 mesi il primo anno, 6 il secondo in due periodi, 3 il terzo.","Il framework si costruisce insieme ai dati e viene finalizzato il terzo anno.","Obiettivo realistico: una prima sperimentazione su comprensibilità e utilità, non la dimostrazione di un'applicabilità generale.","Reti già attive (CEFA, COIKE) e inserimento nel progetto Eco-Log."],c:[]},
+];
+
+const WS=[
+ {id:"w1",area:"teoria",sq:[1,2],q:"Long e Ferguson non sono incompatibili? Uno parla di agency, l'altro di strutture.",crit:"Mettere insieme un approccio orientato all'attore e una critica strutturale può sembrare eclettico.",
+  a:["La tensione è reale e la uso: guardo a due scale diverse.","Ferguson mi serve per vedere come un problema viene inquadrato e quali effetti produce, al di là delle intenzioni.","Long per vedere come gli attori reinterpretano e rinegoziano l'intervento.","Il ponte è nei tuoi post-it: le strutture condizionano l'azione ma non la determinano; l'agency è relazionale ma gli attori agiscono dentro disuguaglianze."],
+  c:[["long","Le strutture condizionano l'azione ma non la determinano"],["long","Agency è relazionale"],["ferguson","Bisogna stare attenti!"]]},
+ {id:"w2",area:"teoria",sq:[3],q:"La hiding hand non è stata smentita?",crit:"Flyvbjerg e Sunstein parlano di \"malevolent hiding hand\": spesso le difficoltà sottovalutate portano a sforamenti e fallimenti, non a soluzioni creative.",
+  a:["Non uso la hiding hand come legge ottimista, ma come invito a guardare cosa emerge quando il piano non regge.","Possibilismo non è ottimismo: con Stame cerco ciò che è stato possibile, senza presupporre che fosse probabile.","I miei casi includono anche esiti negativi: la scuola dopo l'allontanamento della preside, l'acquedotto dopo la fine del progetto."],
+  c:[["hirschman","Possibilismo"],["stame","Valutazione possibilista"]]},
+ {id:"w3",area:"etica",sq:[2],q:"Non rischia di idealizzare \"la comunità\"?",crit:"Una ricerca partecipativa e decoloniale può trattare la comunità come un soggetto omogeneo e virtuoso.",
+  a:["Le comunità sono attraversate da differenze di genere, età, classe e accesso alle risorse: prospettiva intersezionale.","Tamale critica sia l'universalismo occidentale sia la romanticizzazione dei saperi locali.","Arora-Jonsson: le donne né vittime né custodi naturali; nuove responsabilità senza nuovo accesso alle risorse.","Per questo focus group differenziati e la domanda sul comitato dell'acqua: autorità o solo responsabilità?"],c:[["mohanty","La donna del 3° mondo…"],["mohanty","Un modello binario di potere"]]},
+ {id:"w4",area:"ef",sq:[3],q:"L'Ecological Framework non è ancora definito. Su cosa la finanziamo?",crit:"Il risultato principale della tesi è uno strumento che oggi esiste solo come intenzione.",
+  a:["Non definirlo del tutto in anticipo è coerente con la tesi: uno strumento fissato prima riprodurrebbe la logica del piano.","Ha già quattro principi espliciti.","Si costruisce con le comunità a partire dalle risposte alle prime due sotto-domande.","Il traguardo è una prima sperimentazione nel terzo anno, dentro Eco-Log."],c:[]},
+ {id:"w5",area:"metodo",sq:[1,3],q:"Il Sentiment non è soggettivo? E lei è coinvolta emotivamente nei casi.",crit:"Emozioni e percezioni della ricercatrice, che ha lavorato in quei progetti, possono orientare i risultati.",
+  a:["La sorpresa o l'emozione da sola non è una prova: apre domande da verificare empiricamente.","Triangolazione tra interviste, osservazione delle pratiche quotidiane e focus group.","Il diario riflessivo rende tracciabili dubbi ed emozioni invece di nasconderli.","Il coinvolgimento è dichiarato e trattato come dato, coerentemente con Morin."],
+  c:[["stame","Dubbio"],["stame","Che cosa ti ha sorpreso?"]]},
+ {id:"w6",area:"metodo",sq:[1],q:"Con pochi casi, cosa può generalizzare?",crit:"Pochi casi qualitativi in due contee non permettono conclusioni generali.",
+  a:["Non cerco una generalizzazione statistica ma meccanismi e pattern ricorrenti, con le loro differenze di contesto.","Woolcock (2013) usa proprio i casi di studio per ragionare sulla validità esterna di interventi complessi.","Il confronto è doppio: dentro il caso (previsto, osservato, percepito) e tra casi e territori."],
+  c:[["woolcock","Densità causale"]]},
+ {id:"w7",area:"ef",sq:[2,3],q:"Il suo framework non rischia di diventare un'altra macchina antipolitica?",crit:"Applichiamo Ferguson a lei: un nuovo strumento tecnico potrebbe depoliticizzare di nuovo il cambiamento.",
+  a:["È il rischio più serio e lo nomino io per prima.","Per questo il potere è un principio esplicito del framework, e obiettivi e indicatori restano riesaminabili.","Le categorie vengono riviste con le comunità: non è uno strumento per definire in anticipo il cambiamento.","Le traiettorie servono come piste, non come nuovi indicatori fissi."],
+  c:[["ferguson","Sviluppo come macchina antipolitica"],["saggiomo","Però sull'Ecological Framework va aggiunta la dimensione del potere"]]},
+ {id:"w8",area:"progetto",sq:[1,2],q:"Non sta riscrivendo un fallimento come successo?",crit:"Applichiamo Mosse a lei: rileggere l'impianto di West Pokot come \"cambiamento emergente\" è un'altra costruzione a posteriori.",
+  a:["Non voglio salvare il progetto: voglio vedere cosa è cambiato, anche in negativo.","Chiedo chi ha l'autorità di definire successo e fallimento, compresa la mia.","Il ritorno sul campo serve a verificare se la fontana ha davvero prodotto trasformazioni significative per chi la usa."],
+  c:[["mosse","Il successo di un progetto è una costruzione a posteriori"],["domande","② Chi può definire cos'è cambiamento?"]]},
+];
+
+// ---------- stato ----------
+let tab="q",area=null,sq=null,marks={};
+try{marks=JSON.parse(localStorage.getItem("marks")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("marks",JSON.stringify(marks))}catch(e){}};
+const pool=()=>(tab==="w"?WS:tab==="q"?QS:[...QS,...WS]).filter(x=>(!area||x.area===area)&&(!sq||x.sq.includes(sq)));
+
+function chipRow(id,obj,get,set,cls){const row=document.getElementById(id);
+  Object.entries(obj).forEach(([k,l])=>{const c=document.createElement("button");c.className="chip "+(cls||"");c.textContent=l;c.setAttribute("aria-pressed","false");
+    c.onclick=()=>{const v=isNaN(k)?k:+k;set(get()===v?null:v);row.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===c&&get()!==null));render()};row.appendChild(c)})}
+chipRow("areas",AREAS,()=>area,v=>area=v);
+chipRow("sqs",SQL,()=>sq,v=>sq=v,"sq");
+
+let timers=[];
+function card(x,weak){const d=document.createElement("article");d.className="card"+(weak?" weak":"");
+  const st=marks[x.id];
+  d.innerHTML=`<div class="meta"><span class="tag"></span></div><h2 class="q"></h2>`+(weak?`<div class="critic"><b>La critica: </b><span></span></div>`:"")+
+   `<div class="actions"><button class="btn primary go">Rispondi ad alta voce · 2:00</button><span class="timer" aria-live="off"></span><button class="btn ghost show">Mostra la traccia</button></div>
+   <div class="answer" hidden><ul></ul><div class="cite"></div><div class="actions"><button class="btn ghost ok">La so</button><button class="btn ghost rev">Da ripassare</button></div></div>`;
+  d.querySelector(".tag").textContent=AREAS[x.area];
+  x.sq.forEach(n=>{const t=document.createElement("span");t.className="sqtag";t.textContent="SQ"+n;d.querySelector(".meta").appendChild(t)});
+  if(st){const s=document.createElement("span");s.className="status "+st;s.textContent=st==="ok"?"La so":"Da ripassare";d.querySelector(".meta").appendChild(s)}
+  d.querySelector(".q").textContent=x.q;if(weak)d.querySelector(".critic span").textContent=x.crit;
+  const ul=d.querySelector("ul");x.a.forEach(t=>{const li=document.createElement("li");li.textContent=t;ul.appendChild(li)});
+  const ci=d.querySelector(".cite");if(x.c.length){const l=document.createElement("span");l.className="tag";l.textContent="Post-it da citare";ci.appendChild(l);
+    x.c.forEach(([a,t])=>{const s=document.createElement("span");s.className="p";s.style.setProperty("--c",`var(${PC[a]})`);s.textContent=t;ci.appendChild(s)})}
+  const ans=d.querySelector(".answer"),sb=d.querySelector(".show"),tm=d.querySelector(".timer"),go=d.querySelector(".go");
+  sb.onclick=()=>{ans.hidden=!ans.hidden;sb.textContent=ans.hidden?"Mostra la traccia":"Nascondi la traccia"};
+  let iv=null;go.onclick=()=>{if(iv){clearInterval(iv);iv=null;go.textContent="Rispondi ad alta voce · 2:00";return}
+    let s=120;const f=()=>{tm.textContent=(s<0?"-":"")+Math.floor(Math.abs(s)/60)+":"+String(Math.abs(s)%60).padStart(2,"0");tm.classList.toggle("over",s<0)};
+    f();go.textContent="Ferma";iv=setInterval(()=>{s--;f()},1000);timers.push(()=>clearInterval(iv))};
+  d.querySelector(".ok").onclick=()=>{marks[x.id]="ok";save();render()};
+  d.querySelector(".rev").onclick=()=>{marks[x.id]="rev";save();render()};
+  return d}
+
+function render(){timers.forEach(f=>f());timers=[];
+  document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",b.id==="t-"+tab));
+  const P=pool(),list=document.getElementById("list"),drill=document.getElementById("drill");
+  const ok=P.filter(x=>marks[x.id]==="ok").length,rv=P.filter(x=>marks[x.id]==="rev").length;
+  document.getElementById("progress").innerHTML=`<span><b>${P.length}</b> schede</span><span><b>${ok}</b> la so</span><span><b>${rv}</b> da ripassare</span><span><b>${P.length-ok-rv}</b> mai provate</span>`;
+  list.innerHTML="";drill.innerHTML="";list.hidden=tab==="d";drill.hidden=tab!=="d";
+  if(!P.length){(tab==="d"?drill:list).innerHTML='<div class="empty">Nessuna scheda con questi filtri. Togli un filtro per vederne altre.</div>';return}
+  if(tab==="d"){const prio=P.filter(x=>marks[x.id]!=="ok");const src=prio.length?prio:P;const x=src[Math.floor(Math.random()*src.length)];
+    const intro=document.createElement("p");intro.className="small";intro.style.margin="0";intro.textContent="Una domanda a caso tra quelle che non hai ancora segnato come \"La so\". Rispondi, apri la traccia, segnala e passa alla prossima.";
+    drill.appendChild(intro);drill.appendChild(card(x,WS.includes(x)));
+    const nx=document.createElement("button");nx.className="btn primary";nx.textContent="Prossima domanda";nx.style.alignSelf="flex-start";nx.onclick=render;drill.appendChild(nx);return}
+  P.forEach(x=>list.appendChild(card(x,tab==="w")))}
+document.getElementById("t-q").onclick=()=>{tab="q";render()};
+document.getElementById("t-w").onclick=()=>{tab="w";render()};
+document.getElementById("t-d").onclick=()=>{tab="d";render()};
+render();
+</script>
+
+</body>
+</html>
