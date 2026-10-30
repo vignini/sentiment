@@ -224,7 +224,9 @@ const AUTHORS = {
   maathai:{name:"Maathai", ref:"The Green Belt Movement, 2004 · Kenya", c:"--salmon",
     thesis:"La trasformazione ambientale può diventare trasformazione sociale. Le donne non sono \"più ecologiche\" per natura: il loro legame con l'ambiente dipende dalla divisione del lavoro."},
   kenya2:{name:"Nunow et al.", ref:"Nunow, Muthama, Kinama · Analysis of gender roles in climate change adaptation · Kenya", c:"--blue",
-    thesis:"Genere e cambiamento climatico sono collegati attraverso l'accesso diseguale alle risorse: la capacità di adattarsi dipende dal potere di accedere alla terra, alle informazioni e alla decisione."}
+    thesis:"Genere e cambiamento climatico sono collegati attraverso l'accesso diseguale alle risorse: la capacità di adattarsi dipende dal potere di accedere alla terra, alle informazioni e alla decisione."},
+  morin:{name:"Morin", ref:"Introduction à la pensée complexe, 1990", c:"--orange",
+    thesis:"La cornice epistemologica: complessità non significa solo molti fattori, ma fattori interdipendenti che retroagiscono e trasformano il sistema di cui fanno parte. La conoscenza resta aperta a incertezza, contraddizioni e revisione. (Scheda preparata da Claude: non sono tuoi post-it, riscrivila a modo tuo.)"}
 };
 
 // u: trascrizione incerta · imp: segnato IMP · crit: idea criticata (barrata)
@@ -363,6 +365,15 @@ const NOTES = [
   {id:"a7",a:"arora",t:"Il problema non è stabilire se siano vulnerabili o virtuose…",d:"…ma comprendere quali relazioni producono vulnerabilità e possibilità/capacità di azione."},
   {id:"a8",a:"arora",t:"Dare alle donne più responsabilità senza maggior potere",d:""},
   {id:"a9",a:"arora",t:"Trasformazione o sovraccarico?",d:""},
+  {id:"z1",a:"morin",t:"Complessità ≠ tanti fattori",d:"I fattori sono interdipendenti, retroagiscono tra loro e modificano il sistema di cui fanno parte.",imp:1},
+  {id:"z2",a:"morin",t:"Complexus = ciò che è tessuto insieme",d:"Non si può capire un fenomeno separandolo dal suo contesto."},
+  {id:"z3",a:"morin",t:"Il paradigma della semplificazione",d:"Disgiungere e ridurre mutila la conoscenza: isola le parti e perde le relazioni."},
+  {id:"z4",a:"morin",t:"Ecologia dell'azione",d:"Un'azione, appena avviata, sfugge alle intenzioni di chi l'ha compiuta ed entra in un gioco di interazioni che può deviarla o rovesciarla.",imp:1},
+  {id:"z5",a:"morin",t:"Programma ≠ strategia",d:"Il programma è una sequenza fissata in anticipo. La strategia si modifica strada facendo in base a ciò che succede."},
+  {id:"z6",a:"morin",t:"Ricorsività",d:"Effetti e prodotti sono anche cause e produttori: l'intervento trasforma la comunità, che trasforma l'intervento."},
+  {id:"z7",a:"morin",t:"Principio dialogico",d:"Tenere insieme logiche diverse, anche contrarie, senza ridurle a una sola."},
+  {id:"z8",a:"morin",t:"L'osservatore fa parte di ciò che osserva",d:"Non si comprende un processo restando del tutto esterni: chi conosce va reintegrato nella conoscenza."},
+  {id:"z9",a:"morin",t:"Navigare nell'incertezza",d:"Arcipelaghi di certezza in un oceano di incertezza: la conoscenza resta aperta alla revisione."},
   {id:"j1",a:"maathai",t:"La trasformazione ambientale = può diventare trasformazione sociale",d:""},
   {id:"j2",a:"maathai",t:"Le donne non sono più ecologiche…",d:"…ma dipende dalla divisione del lavoro: sono responsabili di acqua e legna."},
   {id:"r1",a:"kenya2",t:"Genere e cambiamento climatico sono collegati attraverso…",d:"",imp:1},
@@ -465,6 +476,17 @@ const LINKS = [
   ["r2","a7","Le relazioni che producono vulnerabilità passano dall'accesso diseguale alle risorse."],
   ["r3","g12","Adattarsi dipende dal potere di accedere alle risorse: è la dimensione del potere da aggiungere all'Ecological Framework."],
   ["r3","a8",""],
+  ["z1","w6","La densità causale di Woolcock è la complessità di Morin vista dagli interventi."],
+  ["z4","h6","L'ecologia dell'azione spiega perché gli effetti non intenzionali sono la regola, non l'eccezione."],
+  ["z4","q0","Il problema del piano è a monte: l'azione sfugge sempre a chi la pianifica."],
+  ["z5","q4","Il PCM tratta il progetto come un programma; il cambiamento chiede una strategia."],
+  ["z5","w5",""],
+  ["z6","l9","Ricorsività: gli attori sono trasformati dall'intervento mentre lo trasformano, come nelle interfacce di Long."],
+  ["z8","s2","Il valutatore che dubita delle proprie categorie è dentro ciò che osserva."],
+  ["z8","n8","Reintegrare l'osservatore: la linea tra chi conosce e chi è conosciuto non è neutra."],
+  ["z9","s8","Restare aperti all'incertezza è ciò che rende la sorpresa una fonte di conoscenza."],
+  ["z2","g12","Ecological come in Morin: l'ecologia del contesto, un sistema vivo di relazioni e di potere."],
+  ["z3","e8","Ridurre tutto a categorie economiche è un caso del paradigma della semplificazione."],
 ];
 
 // Sotto-domande del progetto e lettura del caso West Pokot (proposte di Claude, da riscrivere con parole tue)
@@ -488,6 +510,7 @@ const LENS = {
   arora:{sq:[1,2],wp:"Il progetto ha trattato le donne come le più vulnerabili alla siccità. Io non voglio decidere se siano vittime o soluzione, ma capire quali relazioni la fontana e il comitato dell'acqua hanno spostato. Le donne hanno avuto più potere o solo più responsabilità sulla gestione dell'acqua? Trasformazione o sovraccarico?"},
   maathai:{sq:[1,2],wp:"A West Pokot le donne sono responsabili dell'acqua: è la divisione del lavoro, non una vocazione naturale, a legarle alla fontana. Con Maathai mi chiedo se la trasformazione ambientale portata dall'acqua sia diventata anche trasformazione sociale, per esempio con nuove forme di organizzazione tra donne."},
   kenya2:{sq:[2],wp:"Per capire chi si è adattato meglio alla siccità a West Pokot guardo chi ha accesso a terra, acqua, informazioni e decisioni. Gli effetti dell'intervento passano da come ha cambiato, o riprodotto, questo accesso diseguale tra donne e uomini." },
+  morin:{sq:[1,3],wp:"Il progetto di West Pokot è stato pensato come un programma: impianto, formazione, mezzo acro a testa. Appena avviato, l'intervento è entrato nell'ecologia del contesto (pastorizia, siccità, rapporti di genere) e ha preso un'altra strada. Morin mi dà la cornice per dire che questo non è un errore ma il modo in cui l'azione funziona. Per questo l'Ecological Framework è ecologico: osserva le interdipendenze. E io, che ero dentro il progetto, faccio parte di ciò che osservo."},
   chilisa:{sq:[2,3],wp:"Il ritorno a West Pokot non deve essere knowledge mining: domande e dimensioni dell'Ecological Framework definite insieme, laboratori partecipativi per rivedere le categorie, interpretazione condivisa e restituzione alla comunità nella fase finale."}
 };
 
@@ -498,10 +521,10 @@ const linksOf = id => LINKS.filter(l=>l[0]===id||l[1]===id).map(l=>({other:l[0]=
 // ---------- mappa SVG ----------
 const NS="http://www.w3.org/2000/svg";
 const map=document.getElementById("map");
-const POS={hirschman:[100,110],woolcock:[100,250],long:[370,110],mosse:[370,250],ferguson:[370,390],stame:[640,110],saggiomo:[640,250],escobar:[640,390],ndlovu:[900,250],chilisa:[900,390],mohanty:[900,110],tamale:[1160,110],arora:[1160,250],maathai:[1420,250],kenya2:[1420,390]};
+const POS={hirschman:[100,110],woolcock:[100,250],long:[370,110],mosse:[370,250],ferguson:[370,390],stame:[640,110],saggiomo:[640,250],escobar:[640,390],ndlovu:[900,250],chilisa:[900,390],mohanty:[900,110],tamale:[1160,110],arora:[1160,250],maathai:[1420,250],kenya2:[1420,390],morin:[100,390]};
 function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||map).appendChild(e);return e}
 const defs=el("defs",{});const mk=el("marker",{id:"arr",viewBox:"0 0 10 10",refX:"9",refY:"5",markerWidth:"7",markerHeight:"7",orient:"auto-start-reverse"},defs);el("path",{d:"M0,0L10,5L0,10z",fill:"var(--muted)"},mk);
-const EDGES=[["hirschman","woolcock","traiettorie"],["hirschman","long","oltre il piano"],["hirschman","stame","possibilismo, sorpresa",1],["long","mosse","chi rende ufficiale?"],["mosse","ferguson","effetti politici"],["ferguson","escobar","il discorso"],["stame","saggiomo","dove osservare"],["escobar","ndlovu","decolonialità"],["ndlovu","chilisa","al metodo"],["ndlovu","mohanty","genere"],["mohanty","tamale","intrecci"],["tamale","arora","clima"],["arora","maathai","Kenya"],["maathai","kenya2","risorse"]];
+const EDGES=[["hirschman","woolcock","traiettorie"],["hirschman","long","oltre il piano"],["hirschman","stame","possibilismo, sorpresa",1],["long","mosse","chi rende ufficiale?"],["mosse","ferguson","effetti politici"],["ferguson","escobar","il discorso"],["stame","saggiomo","dove osservare"],["escobar","ndlovu","decolonialità"],["ndlovu","chilisa","al metodo"],["ndlovu","mohanty","genere"],["mohanty","tamale","intrecci"],["tamale","arora","clima"],["arora","maathai","Kenya"],["maathai","kenya2","risorse"],["woolcock","morin","complessità"]];
 const W=170,H=56;
 EDGES.forEach(([a,b,lbl,arc])=>{const [x1,y1]=POS[a],[x2,y2]=POS[b];
   if(arc){el("path",{d:`M${x1},${y1-H/2-2} Q${(x1+x2)/2},${y1-H-40} ${x2},${y2-H/2-4}`,class:"edge","marker-end":"url(#arr)"});el("text",{x:(x1+x2)/2,y:y1-H-36,class:"edgelbl","text-anchor":"middle"}).textContent=lbl;return}
@@ -511,7 +534,7 @@ EDGES.forEach(([a,b,lbl,arc])=>{const [x1,y1]=POS[a],[x2,y2]=POS[b];
 Object.entries(POS).forEach(([k,[x,y]])=>{const g=el("g",{class:"mapnode",id:"mn-"+k,tabindex:"0",role:"link","aria-label":"Vai a "+AUTHORS[k].name});
   el("rect",{x:x-W/2,y:y-H/2,width:W,height:H,rx:3,fill:`var(${AUTHORS[k].c})`},g);
   const t=el("text",{x,y:y-2,"text-anchor":"middle","font-size":"18"},g);t.textContent=AUTHORS[k].name;
-  const s=el("text",{x,y:y+17,"text-anchor":"middle",class:"sub"},g);s.textContent=NOTES.filter(n=>n.a===k).length+" post-it"+(["long","ferguson","escobar"].includes(k)?" · potere":k==="mohanty"?" · potere epistemico":k==="tamale"?" · intersezionalità":k==="arora"?" · clima e genere":k==="maathai"||k==="kenya2"?" · Kenya":"");
+  const s=el("text",{x,y:y+17,"text-anchor":"middle",class:"sub"},g);s.textContent=NOTES.filter(n=>n.a===k).length+" post-it"+(["long","ferguson","escobar"].includes(k)?" · potere":k==="mohanty"?" · potere epistemico":k==="tamale"?" · intersezionalità":k==="arora"?" · clima e genere":k==="maathai"||k==="kenya2"?" · Kenya":k==="morin"?" · cornice":"");
   const go=()=>document.getElementById("b-"+k).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
   g.addEventListener("click",go);g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});});
 

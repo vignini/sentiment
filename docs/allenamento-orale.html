@@ -14,7 +14,7 @@
 :root{
   --bg:#ece9e4; --surface:#fbfaf7; --ink:#24211e; --muted:#6b645d; --line:#d3ccc3;
   --card:#fffdf8; --mine:#0f6b63; --mine-bg:#e3f1ee; --warn:#9a3b12; --warn-bg:#f8e6dc; --ok:#2f6b2a;
-  --pink:#f7a8c4; --green:#c8ec6a; --blue:#7fd0f2; --yellow:#f6e7a1; --salmon:#f6b5a4;
+  --pink:#f7a8c4; --green:#c8ec6a; --blue:#7fd0f2; --yellow:#f6e7a1; --salmon:#f6b5a4; --orange:#f5c35a;
   --focus:#1c6dd0;
   --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
@@ -101,7 +101,7 @@ button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 </div>
 
 <script>
-const PC={mohanty:"--green",hirschman:"--green",woolcock:"--green",long:"--green",mosse:"--blue",stame:"--salmon",saggiomo:"--blue",ferguson:"--blue",escobar:"--yellow",ndlovu:"--salmon",chilisa:"--salmon",tamale:"--yellow",arora:"--blue",maathai:"--salmon",kenya2:"--blue",domande:"--yellow"};
+const PC={mohanty:"--green",hirschman:"--green",woolcock:"--green",long:"--green",mosse:"--blue",stame:"--salmon",saggiomo:"--blue",ferguson:"--blue",escobar:"--yellow",ndlovu:"--salmon",chilisa:"--salmon",tamale:"--yellow",arora:"--blue",maathai:"--salmon",kenya2:"--blue",morin:"--orange",domande:"--yellow"};
 const SQL={1:"SQ1 Relazioni",2:"SQ2 Potere",3:"SQ3 Ecological Framework"};
 const AREAS={progetto:"Il progetto",teoria:"Teoria",metodo:"Metodo",etica:"Posizionamento ed etica",ef:"Ecological Framework"};
 
@@ -148,6 +148,9 @@ const QS=[
  {id:"t10",area:"teoria",sq:[1,2],q:"Quali autrici keniote usa su genere e clima, e perché?",
   a:["Wangari Maathai (The Green Belt Movement, 2004): la trasformazione ambientale può diventare trasformazione sociale.","Maathai dice anche che le donne non sono più ecologiche per natura: il legame con l'ambiente dipende dalla divisione del lavoro, perché sono loro a essere responsabili di acqua e legna. È la stessa critica di Arora-Jonsson alla donna \"naturalmente virtuosa\".","Nunow, Muthama e Kinama: genere e cambiamento climatico sono collegati attraverso l'accesso diseguale alle risorse. La capacità di adattarsi dipende dal potere di accedere alla terra, alle informazioni e alla decisione.","A West Pokot: la fontana ha prodotto trasformazione sociale o solo più lavoro? E chi ha guadagnato accesso all'acqua e alle decisioni?"],
   c:[["maathai","La trasformazione ambientale = può diventare trasformazione sociale"],["maathai","Le donne non sono più ecologiche…"],["kenya2","…l'accesso diseguale alle risorse"]]},
+ {id:"t11",area:"teoria",sq:[1,3],q:"Che ruolo ha Morin nel suo quadro teorico?",
+  a:["Morin (Introduction à la pensée complexe, 1990) è la cornice epistemologica: complessità non vuol dire tanti fattori, ma fattori interdipendenti che retroagiscono e trasformano il sistema.","L'ecologia dell'azione: un'azione, appena avviata, sfugge alle intenzioni di chi l'ha pensata. Per questo gli effetti non intenzionali di Hirschman sono la regola.","Programma contro strategia: il PCM tratta il progetto come un programma fissato in anticipo, mentre il cambiamento chiede una strategia che si corregge strada facendo.","Da qui il nome Ecological Framework: osservare l'ecologia del contesto, le interdipendenze tra relazioni sociali e di potere. E la riflessività: l'osservatore fa parte di ciò che osserva."],
+  c:[["morin","Ecologia dell'azione"],["morin","Programma ≠ strategia"],["morin","L'osservatore fa parte di ciò che osserva"]]},
  {id:"m1",area:"metodo",sq:[2],q:"Come rende osservabile il potere?",
   a:["Su due piani: distribuzione di risorse e autorità, e potere epistemico di definire problemi e conoscenze legittime.","Esempio: le donne entrate per la prima volta nel comitato dell'acqua a West Pokot. Hanno ottenuto autorità o solo nuove responsabilità?","Confronto tra cambiamento previsto (documenti), osservato e percepito: chi decide quale versione diventa ufficiale.","Focus group differenziati per genere, età e accesso alle risorse, per far emergere conflitti di interpretazione."],
   c:[["long","Non tutte le conoscenze possiedono la stessa autorità"],["mosse","Potere = chi rende quell'interpretazione ufficiale"]]},

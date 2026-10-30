@@ -7,7 +7,7 @@ Due pagine HTML che funzionano nel browser, sia dal computer che dal telefono. I
 ## 1. La porta dei post-it (mappa concettuale)
 
 ### Il filo tra gli autori
-In alto c'è la mappa degli autori: Hirschman, Woolcock, Long, Mosse, Ferguson, Stame, Saggiomo, Escobar, Ndlovu-Gatsheni, Chilisa, Mohanty e, per il genere, Tamale e Arora-Jonsson, e per il Kenya Maathai e Nunow, Muthama e Kinama.
+In alto c'è la mappa degli autori: Hirschman, Woolcock, Long, Mosse, Ferguson, Stame, Saggiomo, Escobar, Ndlovu-Gatsheni, Chilisa, Mohanty e, per il genere, Tamale e Arora-Jonsson, e per il Kenya Maathai e Nunow, Muthama e Kinama. Morin, in arancione, è la cornice epistemologica: la sua scheda l'ha preparata Claude, perché non avevi i post-it.
 
 - **Clicca un autore** per saltare ai suoi post-it.
 - **Le frecce** sono i passaggi del ragionamento, per esempio "oltre il piano", "chi rende ufficiale?", "il discorso" o "decolonialità". Prova a spiegare a voce ogni freccia.
