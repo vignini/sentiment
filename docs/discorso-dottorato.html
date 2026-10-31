@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Il filo del discorso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Gochi+Hand&display=swap">
+<style>
+/* Mappa narrativa: le tappe del discorso in ordine, lungo un filo rosso verticale.
+   Ogni tappa = post-it trascritti + cosa dire + parole chiave + ponte verso la tappa successiva. */
+:root{
+  --bg:#efe9e2; --surface:#fbf8f4; --ink:#2a2420; --muted:#6d625a; --line:#cfc3b6;
+  --thread:#c0392b;
+  --green:#c8ec6a; --blue:#7fd0f2; --yellow:#f6e7a1; --salmon:#f6b5a4; --lemon:#eef36a;
+  --note-ink:#1f1a17; --focus:#1c6dd0; --mine:#0f6b63; --mine-bg:#e3f1ee;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
+  --hand:"Gochi Hand","Comic Sans MS",cursive;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1d1714; --surface:#29211d; --ink:#f1e9e2; --muted:#b5a79c; --line:#4a3d35; --thread:#e8705f;
+  --green:#b4d95a; --blue:#68bfe3; --yellow:#e8d98e; --salmon:#e7a090; --lemon:#d9de5a;
+  --focus:#7db4ff; --mine:#6fd1c1; --mine-bg:#1d3532; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1d1714; --surface:#29211d; --ink:#f1e9e2; --muted:#b5a79c; --line:#4a3d35; --thread:#e8705f;
+  --green:#b4d95a; --blue:#68bfe3; --yellow:#e8d98e; --salmon:#e7a090; --lemon:#d9de5a;
+  --focus:#7db4ff; --mine:#6fd1c1; --mine-bg:#1d3532; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;
+  padding:24px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:24px}
+a{color:var(--mine)}
+.eyebrow{font-family:var(--hand);font-size:20px;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,46px);line-height:1.05;margin:4px 0 8px;text-wrap:balance;letter-spacing:-.01em}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(20px,3vw,26px);line-height:1.15;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:15px;margin:0 0 6px;letter-spacing:.02em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:17px;max-width:70ch;margin:0}
+.back{font-size:14px;font-weight:700;text-decoration:none}
+.pitch{background:var(--surface);border-left:5px solid var(--thread);border-radius:10px;padding:16px 20px;max-width:80ch}
+.pitch p{margin:6px 0 0}
+
+/* barra comandi + arco */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--ink);font:700 13px var(--body);padding:8px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:700 14px var(--body);padding:8px 16px;border-radius:999px;cursor:pointer}
+.btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line)}
+label.sel{font-size:13px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}
+select{font:600 13px var(--body);padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.arc{display:flex;gap:4px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.arc a{flex:1 0 auto;min-width:44px;text-decoration:none;color:var(--ink);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:2px 4px;border-radius:8px}
+.arc a .dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:800 12px var(--display);background:var(--surface);border:2px solid var(--thread);color:var(--ink)}
+.arc a.on .dot{background:var(--thread);color:#fff}
+.arc a .lbl{white-space:nowrap;color:var(--muted)}
+.arc .act{align-self:center;font-family:var(--hand);font-size:15px;color:var(--thread);padding:0 6px;white-space:nowrap}
+button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+/* filo */
+.thread{position:relative;display:flex;flex-direction:column;gap:22px}
+.thread::before{content:"";position:absolute;left:21px;top:0;bottom:0;width:4px;border-radius:2px;background:var(--thread);opacity:.85}
+.actlabel{position:relative;margin-left:56px;font-family:var(--hand);font-size:24px;color:var(--thread);line-height:1.1}
+.actlabel small{display:block;font-family:var(--body);font-size:13px;color:var(--muted)}
+.step{position:relative;display:grid;grid-template-columns:46px 1fr;gap:10px}
+.num{width:46px;height:46px;border-radius:50%;background:var(--thread);color:#fff;display:grid;place-items:center;font:800 18px var(--display);position:relative;z-index:1;box-shadow:0 0 0 5px var(--bg)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.card header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;align-items:baseline}
+.guide{font-family:var(--hand);font-size:19px;color:var(--muted)}
+.time{font-size:12px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 9px;white-space:nowrap}
+
+/* post-it */
+.wall{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start}
+.wall.pairs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto;grid-auto-flow:column;gap:12px}
+@media (max-width:720px){.wall.pairs{grid-template-columns:1fr;grid-auto-flow:row}}
+.note{background:var(--yellow);color:var(--note-ink);padding:12px 14px 14px;border-radius:2px;box-shadow:0 1px 0 rgba(0,0,0,.06),0 6px 14px -8px rgba(0,0,0,.35);
+  flex:1 1 200px;max-width:320px;min-width:0;transform:rotate(var(--r,0deg));font-size:14px;line-height:1.4}
+.wall.pairs .note{max-width:none}
+.note.wide{flex-basis:100%;max-width:640px}
+.note.small{flex:0 1 160px}
+.note .t{font-family:var(--hand);font-size:21px;line-height:1.1;margin-bottom:4px;display:block}
+.note .b{white-space:pre-line}
+.note.c-green{background:var(--green)} .note.c-blue{background:var(--blue)} .note.c-salmon{background:var(--salmon)} .note.c-lemon{background:var(--lemon)}
+.note .tag{display:inline-block;font:700 11px var(--body);background:rgba(0,0,0,.12);border-radius:4px;padding:1px 6px;margin-bottom:4px}
+.cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.cases{grid-template-columns:1fr}}
+.cases div{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:14px}
+.cases b{font-family:var(--display)}
+.cases ul{margin:4px 0 0;padding-left:18px}
+
+/* testo da dire */
+.say{background:var(--mine-bg);border-radius:10px;padding:12px 14px}
+.say p{margin:0;max-width:75ch}
+.keys{display:flex;flex-wrap:wrap;gap:6px}
+.keys span{background:var(--ink);color:var(--bg);font:700 13px var(--body);padding:4px 10px;border-radius:999px}
+.bridge{font-style:italic;color:var(--thread);font-weight:700;margin:0}
+.bridge::before{content:"Ponte → ";font-style:normal;color:var(--muted);font-weight:700}
+.authors{font-size:13px;color:var(--muted)}
+.authors b{color:var(--ink)}
+details.qa{border-top:1px solid var(--line);padding-top:10px}
+details.qa summary{cursor:pointer;font-weight:700;font-size:14px}
+details.qa dl{margin:8px 0 0}
+details.qa dt{font-weight:700;margin-top:8px}
+details.qa dd{margin:2px 0 0;max-width:75ch}
+.final{font-family:var(--display);font-weight:700;font-size:clamp(18px,2.6vw,24px);line-height:1.3;border:3px solid var(--thread);border-radius:14px;padding:16px 18px;margin:0}
+body.keysonly .say{display:none}
+
+/* modalità presentazione */
+#stage{position:fixed;inset:0;z-index:20;background:var(--bg);display:none;flex-direction:column;
+  padding:max(14px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(14px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#stage.open{display:flex}
+.stage-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.progress{flex:1 1 160px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--thread);width:0;transition:width .25s}
+.clock{font:800 15px var(--display);min-width:110px;text-align:right}
+.clock.over{color:var(--thread)}
+.stage-body{flex:1;overflow-y:auto;padding:18px 0;max-width:1000px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.stage-body h2{font-size:clamp(26px,4.5vw,44px)}
+.stage-body .keys span{font-size:clamp(15px,2vw,19px);padding:6px 14px}
+.stage-body .say p{font-size:18px}
+.stage-nav{display:flex;justify-content:space-between;gap:10px}
+.stage-nav .btn{min-width:120px}
+@media (prefers-reduced-motion:reduce){.progress i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <a class="back" href="index.html">← Torna all'indice</a>
+    <div class="eyebrow">Il mio progetto di dottorato, tappa per tappa</div>
+    <h1>Il filo del discorso</h1>
+    <p class="lead"><i>Oltre la linearità del cambiamento: analisi del legame tra genere, clima e relazioni di potere nei cambiamenti emergenti in Kenya.</i> Questa mappa mette i post-it in fila nell'ordine in cui raccontarli. Per ogni tappa trovi cosa dire, le parole chiave da ricordare e la frase-ponte che porta alla tappa successiva.</p>
+  </div>
+
+  <div class="pitch">
+    <h3>Il discorso in 30 secondi</h3>
+    <p>In West Pokot un impianto di irrigazione finanziato dall'UE non è mai stato usato per coltivare, eppure attorno alla sua fontana è nato un cambiamento che nessun indicatore aveva previsto. Da questo scarto tra cambiamento programmato e cambiamento emerso nasce la mia domanda: <b>come emerge il cambiamento nella cooperazione internazionale, e come riconoscerlo e accompagnarlo mentre accade?</b> La studio in sei casi in Kenya, tra clima e genere, seguendo le traiettorie del cambiamento e i rapporti di potere, per costruire con le comunità un <b>Ecological Framework</b> che affianchi il PCM.</p>
+  </div>
+
+  <div class="bar" id="bar">
+    <div class="controls">
+      <button class="btn" id="present" type="button">▶ Presenta</button>
+      <div class="seg" role="group" aria-label="Cosa mostrare">
+        <button type="button" id="m-full" aria-pressed="true">Testo completo</button>
+        <button type="button" id="m-keys" aria-pressed="false">Solo parole chiave</button>
+      </div>
+      <label class="sel">Durata
+        <select id="dur"><option value="5">5 min</option><option value="10" selected>10 min</option><option value="15">15 min</option><option value="20">20 min</option></select>
+      </label>
+    </div>
+    <nav class="arc" id="arc" aria-label="Tappe del discorso"></nav>
+  </div>
+
+  <main class="thread" id="thread"></main>
+</div>
+
+<div id="stage" role="dialog" aria-modal="true" aria-label="Modalità presentazione">
+  <div class="stage-top">
+    <button class="btn ghost" id="s-close" type="button">✕ Esci</button>
+    <button class="btn ghost" id="s-text" type="button" aria-pressed="false">Mostra testo</button>
+    <div class="progress" aria-hidden="true"><i id="s-prog"></i></div>
+    <div class="clock" id="s-clock" aria-live="off">0:00</div>
+  </div>
+  <div class="stage-body" id="s-body"></div>
+  <div class="stage-nav">
+    <button class="btn ghost" id="s-prev" type="button">← Indietro</button>
+    <button class="btn" id="s-next" type="button">Avanti →</button>
+  </div>
+</div>
+
+<script>
+const ACTS = {
+  perche:{t:"Atto I · Perché",s:"Da dove nasce la ricerca"},
+  cosa:{t:"Atto II · Che cosa",s:"Domanda, obiettivi, contributo"},
+  come:{t:"Atto III · Come",s:"Casi, metodo, dati, strumento"},
+  percosa:{t:"Atto IV · Per che cosa",s:"Risultati e chiusura"}
+};
+const STEPS = [
+{id:"storia",act:"perche",short:"Storia",title:"La storia: West Pokot",guide:"Da dove parte tutto?",w:1.25,
+ notes:[{c:"salmon",t:"West Pokot",b:"→ impianto di irrigazione come fallimento?"}],
+ say:"Parto da un'esperienza concreta. A West Pokot, in Kenya, con la ONG con cui lavoravo abbiamo realizzato un impianto di irrigazione di 36 ettari finanziato dall'Unione Europea. Più di duecento persone sono state formate e hanno ricevuto un appezzamento: secondo il quadro logico, la comunità avrebbe prodotto da sola il proprio cibo. L'impianto non è mai stato usato per coltivare. Eppure non è stato abbandonato: l'acqua faceva crescere erba per il pascolo, e la fontana e l'abbeveratoio, pensati come componenti secondarie, sono diventati uno spazio usato dalle donne, con nuove forme di socialità. Per il PCM è un fallimento. La domanda che mi porto dietro è: è davvero un fallimento, o è un cambiamento che i nostri strumenti non sanno vedere?",
+ keys:["36 ettari, fondi UE","mai usato per coltivare","pascolo","fontana e donne","fallimento?"],
+ authors:"Hirschman (gli imprevisti attivano risorse nascoste)",
+ bridge:"Questo scarto tra cambiamento programmato e cambiamento emerso non è un caso isolato: è il cuore del problema.",
+ qa:[["Non stai giustificando un progetto andato male?","No: il progetto ha mancato il suo obiettivo e lo riconosco. Il punto è che gli strumenti registrano solo la distanza dal piano e non ciò che è emerso altrove, come la fontana. Voglio vedere entrambe le cose."]]},
+
+{id:"problema",act:"perche",short:"Problema",title:"Il problema: oltre la linearità",guide:"Perché è un problema più ampio?",w:1,
+ notes:[
+  {c:"yellow",t:"Da cosa nasce?",b:"→ dalla critica della linearità del cambiamento\n→ vs complessità del contesto\n→ dalla realtà formale dei documenti alla \"realtà del progetto\"\n→ la ricerca intende spostare l'attenzione dai risultati programmati alle pratiche attraverso cui gli interventi vengono interpretati dagli attori, e agli effetti inattesi"},
+  {c:"yellow",t:"Agenda 2030",b:"17 obiettivi · 169 target · un sistema globale di indicatori\n→ solo il 35% dei target è in linea\n→ il 18% è peggiorato"},
+  {c:"yellow",t:"La cooperazione, presa troppo dal programmare e pianificare…",b:"…magari si è scordata il ruolo del\n① contesto  ② tempo  ③ relazioni"}],
+ say:"La cooperazione ha affinato sempre di più la capacità di pianificare. Il Project Cycle Management, con il quadro logico, rappresenta il cambiamento come una catena lineare: attività, risultati, obiettivi, impatto. L'Agenda 2030 è l'espressione più ampia di questa tendenza: 17 obiettivi, 169 target, un sistema globale di indicatori. Eppure, a cinque anni dalla scadenza, solo il 35% dei target è in traiettoria positiva e il 18% è peggiorato. Non dico che pianificare sia inutile: il PCM rende esplicite le ipotesi. Dico che, pianificando con sempre più precisione, la cooperazione rischia di perdere di vista tre cose: il contesto, il tempo e le relazioni. Per questo la ricerca sposta l'attenzione dai risultati programmati alle pratiche con cui gli attori interpretano gli interventi, e agli effetti inattesi che ne nascono.",
+ keys:["PCM = catena lineare","Agenda 2030: 35% · 18%","contesto · tempo · relazioni","dai risultati alle pratiche"],
+ authors:"<b>Long</b> (contesto) · <b>Woolcock</b> (tempo) · <b>Saggiomo</b> (relazioni) · Mosse (progetto scritto e progetto vissuto)",
+ bridge:"Da qui nasce la domanda centrale della ricerca.",
+ qa:[["Quindi vuoi abolire il PCM?","No. Voglio affiancargli strumenti più flessibili. Il PCM resta utile per rendere esplicite le ipotesi, ma da solo non riconosce ciò che emerge fuori dal piano."]]},
+
+{id:"domanda",act:"cosa",short:"Domanda",title:"La domanda centrale",guide:"Che cosa voglio sapere?",w:.75,
+ notes:[{c:"yellow",wide:true,t:"Come emerge il cambiamento nei processi di cooperazione internazionale",b:"e come può essere riconosciuto e accompagnato dagli strumenti e dagli attori attraverso cui essa opera?"}],
+ say:"La domanda centrale ha due metà. La prima è conoscitiva: come emerge il cambiamento. La seconda è operativa: come riconoscerlo e accompagnarlo mentre sta avvenendo, non solo a posteriori. E chiama in causa sia gli strumenti, come il PCM, sia gli attori: cooperanti, comunità, istituzioni.",
+ keys:["emerge","riconosciuto","accompagnato","strumenti e attori"],
+ authors:"Hirschman, Woolcock (il cambiamento non è lineare)",
+ bridge:"Per rispondere, la domanda si articola in tre sotto-domande, e ognuna diventa un obiettivo.",
+ qa:[["Perché dici \"emerge\" e non \"viene prodotto\"?","Perché il cambiamento non deriva automaticamente dalla sequenza delle attività: nasce dall'incontro tra l'intervento e il contesto, spesso in direzioni non previste."]]},
+
+{id:"obiettivi",act:"cosa",short:"Obiettivi",title:"Tre sotto-domande, tre obiettivi",guide:"Come la scompongo?",w:1.25,pairs:true,
+ notes:[
+  {c:"green",tag:"Sotto-domanda 1",b:"In che modo le relazioni e le pratiche con cui gli attori interpretano, negoziano e trasformano gli interventi fanno emergere il cambiamento?"},
+  {c:"blue",tag:"Obiettivo 1",t:"Comprendere",b:"come il cambiamento prende forma nelle pratiche, nelle relazioni e nelle negoziazioni degli attori"},
+  {c:"green",tag:"Sotto-domanda 2",b:"In che modo gli interventi di cooperazione trasformano, riproducono o rafforzano i rapporti di potere?"},
+  {c:"blue",tag:"Obiettivo 2",t:"Analizzare",b:"le trasformazioni nei rapporti di potere: distribuzione di risorse e autorità…\n+ il potere di definire problemi e soluzioni"},
+  {c:"green",tag:"Sotto-domanda 3",b:"Quali principi e pratiche possono confluire in strumenti nuovi, capaci di riconoscere e accompagnare cambiamenti emergenti, interdipendenze e dinamiche di potere?"},
+  {c:"blue",tag:"Obiettivo 3",t:"Elaborare e sperimentare",b:"una metodologia operativa (Ecological Framework)"}],
+ say:"Ogni sotto-domanda ha il suo obiettivo. La prima riguarda relazioni e pratiche: come gli attori interpretano, negoziano e trasformano gli interventi. L'obiettivo è comprendere come il cambiamento prende forma lì. La seconda riguarda il potere: gli interventi trasformano, riproducono o rafforzano i rapporti tra cooperanti, comunità e istituzioni? L'obiettivo è analizzarli guardando sia alla distribuzione di risorse e autorità sia al potere epistemico, cioè chi ha il potere di definire i problemi e le soluzioni. La terza è operativa: quali principi e pratiche possono confluire in strumenti nuovi? L'obiettivo è elaborare e sperimentare una metodologia, l'Ecological Framework. Le prime due danno la base empirica, la terza la traduce in uno strumento.",
+ keys:["① relazioni e pratiche → comprendere","② potere (risorse + epistemico) → analizzare","③ strumenti nuovi → elaborare e sperimentare"],
+ authors:"① <b>Long</b>, Mosse · ② <b>Ferguson</b>, Escobar, Ndlovu-Gatsheni · ③ PDIA, Stame, <b>Saggiomo</b>",
+ bridge:"Messe insieme, queste tre domande definiscono il contributo originale della ricerca.",
+ qa:[["Che cosa intendi per potere epistemico?","Il potere di stabilire quali problemi contano e quali conoscenze sono legittime. Ferguson ed Escobar mostrano come lo sviluppo trasformi problemi politici in problemi tecnici; Ndlovu-Gatsheni lo chiama libertà epistemica."]]},
+
+{id:"contributo",act:"cosa",short:"Contributo",title:"Il contributo originale",guide:"Che cosa aggiungo?",w:.75,
+ notes:[
+  {c:"salmon",t:"Contributo originale",b:"collegare la comprensione del cambiamento come processo emergente e relazionale"},
+  {c:"salmon",b:"alla costruzione di una metodologia operativa per la cooperazione che espanda il PCM"},
+  {c:"salmon",b:"rendendo visibili interpretazioni, trasformazioni inattese e dinamiche di potere"}],
+ say:"La critica alla linearità del PCM è ormai consolidata, ma gli strumenti operativi sono rimasti sostanzialmente gli stessi. Il contributo originale sta in questo scarto: collegare la comprensione del cambiamento come processo emergente e relazionale alla costruzione di una metodologia operativa che amplia il PCM, rendendo visibili interpretazioni, trasformazioni inattese e dinamiche di potere. E lo fa mettendo in dialogo filoni che di solito restano separati: complessità, approccio orientato all'attore, valutazione possibilista, critica decoloniale e femminista.",
+ keys:["critica consolidata, strumenti invariati","emergente e relazionale","metodologia operativa","ampliare il PCM","rendere visibile"],
+ authors:"Il dialogo tra i filoni: Hirschman e Woolcock · Long e Mosse · Stame e Saggiomo · Ferguson ed Escobar · Ndlovu-Gatsheni e Chilisa · Mohanty, Tamale, Arora-Jonsson",
+ bridge:"Per farlo serve guardare il cambiamento da vicino, in contesti precisi.",
+ qa:[["Esistono già approcci adattivi, come la PDIA. Che cosa c'è di nuovo?","La PDIA è pensata soprattutto per le capacità istituzionali. Resta aperto come riconoscere e registrare le trasformazioni emergenti a livello comunitario e portarle nelle decisioni senza ricondurle per forza agli indicatori iniziali, tenendo dentro il potere e il genere."]]},
+
+{id:"casi",act:"come",short:"Casi",title:"Dove: sei casi in Kenya",guide:"Dove e che cosa osservo?",w:1.25,
+ notes:[
+  {c:"salmon",t:"6 casi",b:"3 Kwale · 3 West Pokot\n→ caratterizzati da crisi climatica e disuguaglianza di genere"},
+  {c:"salmon",t:"Visitati in diversi periodi",b:"→ tutti sono stati toccati, o saranno toccati, da progetti della cooperazione internazionale"},
+  {c:"salmon",t:"Unità di analisi",b:"la traiettoria del cambiamento"}],
+ cases:true,
+ say:"La ricerca si svolge in Kenya, in due sistemi socio-ecologici diversi: Kwale, sulla costa, dove si intrecciano pesca, turismo, conservazione e giustizia fondiaria, e West Pokot, un territorio arido e agro-pastorale. Sei casi, tre per contea, tutti all'incrocio tra crisi climatica e disuguaglianza di genere. Li osservo in momenti diversi: alcuni progetti sono conclusi, altri in corso, altri potranno ricevere fondi. Così vedo cosa succede quando un intervento entra o esce da un sistema di relazioni. E l'unità di analisi non è il progetto, ma la traiettoria del cambiamento che lo attraversa.",
+ keys:["Kwale (costa) · West Pokot (ASAL)","6 casi","clima × genere","prima, durante, dopo","traiettorie, non progetti"],
+ authors:"<b>Woolcock</b> (traiettorie e densità causale)",
+ bridge:"Per seguire traiettorie nel tempo serve un approccio metodologico preciso.",
+ qa:[["Perché proprio clima e genere?","Sono interventi ad alta densità causale, dove la linearità del quadro logico è meno plausibile. E la posta in gioco è alta: il cambiamento climatico moltiplica le disuguaglianze di genere."],
+     ["Il tuo lavoro passato in quei luoghi non è un limite?","È una risorsa per l'accesso al campo, e diventa oggetto di riflessività: osservo come la mia presenza influenza le relazioni."]]},
+
+{id:"metodo",act:"come",short:"Metodo",title:"Come: l'approccio metodologico",guide:"Con quale sguardo osservo?",w:1.25,
+ notes:[
+  {c:"green",t:"Approccio metodologico",b:"① qualitativo\n② comparativo\n③ longitudinale\n④ partecipativo"},
+  {c:"green",t:"Etnografia impegnata",b:"la ricercatrice non si presenta come osservatrice esterna e neutrale, ma partecipa alla vita quotidiana e alle attività delle persone con cui lavora, e studia come la propria presenza influenzi le relazioni"},
+  {c:"green",t:"Ricerca-azione partecipativa",b:"conoscere la realtà insieme a chi la vive, intervenendo su di essa e imparando dall'azione: comunità e ricercatrice producono conoscenza e sperimentano insieme un cambiamento"},
+  {c:"yellow",t:"Intersezionalità come prospettiva",b:""},
+  {c:"yellow",t:"Decolonialità come pratica",b:""}],
+ say:"L'approccio è qualitativo, perché cerco relazioni, pratiche e significati; comparativo, tra casi e territori; longitudinale, perché segue le trasformazioni nel tempo; partecipativo, perché gli attori contribuiscono sia a produrre le informazioni sia a sperimentare il framework. Integro l'etnografia impegnata, cioè una presenza prolungata dall'interno con una posizione esplicita, e la ricerca-azione partecipativa, in cui comunità e ricerca producono conoscenza e sperimentano insieme. Due lenti attraversano tutto: l'intersezionalità come prospettiva, perché le comunità non sono omogenee; e la decolonialità come pratica, non come etichetta, cioè redistribuire l'autorità di definire e interpretare.",
+ keys:["qualitativo · comparativo · longitudinale · partecipativo","etnografia impegnata","ricerca-azione","intersezionalità = prospettiva","decolonialità = pratica"],
+ authors:"<b>Chilisa</b>, Ndlovu-Gatsheni (decolonialità) · Mohanty, Tamale, Arora-Jonsson (intersezionalità) · Morin (l'osservatore fa parte di ciò che osserva)",
+ bridge:"In concreto, la produzione dei dati segue cinque fasi.",
+ qa:[["Come eviti di idealizzare la comunità?","Con l'intersezionalità: genere, età, condizione economica e accesso alle risorse cambiano chi partecipa e chi beneficia. Tamale e Chilisa mettono in guardia proprio dalla romanticizzazione dei saperi locali."]]},
+
+{id:"dati",act:"come",short:"Dati",title:"Produzione e analisi dei dati",guide:"Con quali passi?",w:.5,
+ notes:[
+  {c:"blue",t:"5 fasi",b:"i) analisi documentale dei progetti\nii) ingresso nei contesti e definizione delle prime domande e metodologie\niii) osservazione partecipante e interviste semi-strutturate"},
+  {c:"blue",b:"iv) ritorni periodici sul campo e sperimentazione del framework\nv) fase conclusiva di restituzione e interpretazione con la comunità"}],
+ say:"Cinque fasi. Analisi documentale, per ricostruire il cambiamento previsto dai progetti. Ingresso nei contesti e definizione partecipata delle prime domande del framework. Osservazione partecipante e interviste semi-strutturate, da 15 a 20 per caso, con 2 o 3 focus group divisi per genere, età e accesso alle risorse, insieme a un diario riflessivo. Ritorni periodici per seguire i casi e sperimentare il framework. Infine restituzione e interpretazione condivisa con le comunità. L'analisi è tematica, processuale e comparativa: confronto il cambiamento previsto, osservato e percepito.",
+ keys:["documenti","ingresso","osservazione + interviste + diario","ritorni","restituzione","previsto · osservato · percepito"],
+ authors:"Saggiomo (diario e segnali deboli) · Chilisa (laboratori partecipativi)",
+ bridge:"Tutto questo confluisce nello strumento al centro del progetto: l'Ecological Framework.",
+ qa:[["A cosa serve il diario riflessivo?","A registrare osservazioni, dubbi, emozioni e segnali deboli, in linea con la Sentiment Evaluation: sono indizi di trasformazioni che gli indicatori non registrano ancora."],
+     ["Quanto tempo sul campo?","Dodici mesi in tre anni: 3 il primo, 6 il secondo in due periodi, 3 il terzo, quando il framework viene finalizzato e sperimentato."]]},
+
+{id:"framework",act:"come",short:"Framework",title:"L'Ecological Framework",guide:"Che strumento costruisco?",w:1,
+ notes:[
+  {c:"yellow",t:"Ecological Framework",b:"→ ecologia del contesto"},
+  {c:"salmon",t:"Ecologia del contesto",b:"come sistema vivo in relazione"},
+  {c:"salmon",t:"Formato da relazioni sociali e relazioni di potere",b:"→ che si influenzano reciprocamente e si trasformano nel tempo"},
+  {c:"salmon",t:"Cosa dovrà fare",b:"① partire dal contesto\n② rendere visibili e analizzare le modifiche nei rapporti di potere\n③ riconoscere effetti inattesi, relazioni…"},
+  {c:"salmon",b:"…e sentiment (motivazioni, creatività e spazi)\n④ consentire che obiettivi e indicatori siano riesaminati alla luce di ciò che emerge"}],
+ say:"\"Ecological\" non significa solo ambientale: indica l'ecologia del contesto, un sistema vivo di relazioni sociali e di potere che si influenzano a vicenda e cambiano nel tempo. La forma definitiva non si può fissare in anticipo, ma quattro principi sono già chiari. Lo strumento dovrà partire dal contesto e da come l'intervento viene interpretato localmente; rendere visibili i cambiamenti nei rapporti di potere, anche dentro le comunità; riconoscere effetti inattesi, relazioni, sentiment e segnali deboli; e permettere di rivedere obiettivi e indicatori alla luce di ciò che emerge. Non è un piano rigido: è uno strumento vivo, costruito con le comunità, che chiede una leadership adattiva.",
+ keys:["ecologia del contesto","sistema vivo","① contesto","② potere","③ inatteso + sentiment","④ indicatori rivedibili","leadership adattiva"],
+ authors:"<b>Saggiomo</b> (sentiment: motivazioni, relazioni, spazi, creatività) · Stame (sorpresa) · PDIA (adattamento) · Long (interfacce)",
+ bridge:"Che cosa mi aspetto di ottenere, alla fine?",
+ qa:[["Come fai a validarlo in tre anni?","Non pretendo di dimostrarne l'applicabilità generale: è prevista una prima sperimentazione su comprensibilità e utilità. Una sperimentazione più estesa è uno sviluppo oltre il dottorato."],
+     ["Da dove vengono i contenuti del framework?","Dalle risposte alle prime due sotto-domande: sono la base empirica che indica che cosa gli strumenti ordinari non vedono."]]},
+
+{id:"risultati",act:"percosa",short:"Risultati",title:"Risultati attesi e ricadute",guide:"Che cosa lascia la ricerca?",w:.75,
+ notes:[
+  {c:"green",t:"Piano empirico",b:"→ comprensione delle traiettorie di cambiamento, di come emergono dall'incontro tra contesto e intervento, e delle trasformazioni di potere\n→ capire meglio l'intreccio tra genere e cambiamento climatico"},
+  {c:"green",t:"Piano teorico",b:"→ ampliare la Sentiment Evaluation e trasferirla dalla valutazione all'implementazione"},
+  {c:"green",t:"Piano metodologico",b:"→ contribuire alla definizione dell'Ecological Framework di Eco-Log"},
+  {c:"green",t:"Ricaduta applicativa",b:"→ mettere a disposizione degli operatori della cooperazione uno strumento per capire che cosa sta cambiando"}],
+ say:"I risultati sono su tre piani, più una ricaduta. Sul piano empirico, capire le traiettorie del cambiamento e le trasformazioni di potere, e come l'intreccio tra genere e clima viene affrontato con strategie situate. Sul piano teorico, ampliare la Sentiment Evaluation di Saggiomo, nata sui progetti della diaspora, a contesti di cooperazione più ampi, e spostarla dalla valutazione finale all'implementazione. Sul piano metodologico, contribuire all'Ecological Framework del progetto Eco-Log, con un toolkit sulla leadership. La ricaduta: dare a chi lavora nella cooperazione uno strumento per capire che cosa sta cambiando e adattare le decisioni.",
+ keys:["empirico: traiettorie e potere","teorico: Sentiment Evaluation","metodologico: Eco-Log","ricaduta: uno strumento per gli operatori"],
+ authors:"Saggiomo · progetto Eco-Log · Cattedra UNESCO",
+ bridge:"Per chiudere, torno alla fontana di West Pokot.",
+ qa:[]},
+
+{id:"chiusura",act:"percosa",short:"Chiusura",title:"Chiusura: la domanda dello strumento",guide:"Con che cosa lascio la commissione?",w:.25,
+ notes:[],final:"Che cosa sta cambiando, per chi, attraverso quali relazioni, secondo l'interpretazione di chi, con quali effetti e rapporti di potere, e come può il progetto adattarsi mentre il cambiamento sta ancora avvenendo?",
+ say:"Con l'Ecological Framework, la fontana di West Pokot non sarebbe stata una nota a margine di un fallimento, ma un segnale da riconoscere mentre accadeva. Lo strumento dovrebbe aiutare cooperanti, comunità e organizzazioni a chiedersi continuamente la domanda che vedete qui. In un momento in cui la cooperazione ha meno risorse e più pressione politica, riconoscere il cambiamento reale è anche una questione di efficacia e di legittimità.",
+ keys:["la fontana","per chi · secondo chi","adattarsi mentre accade","efficacia e legittimità"],
+ authors:"",bridge:"",qa:[]}
+];
+
+const CASES = `<div class="cases">
+ <div><b>Kwale</b> · costa: pesca, turismo, giustizia fondiaria<ul>
+  <li><b>Mida Yehu</b> (Smart Move): terra, land grabbing ed eredità femminile</li>
+  <li><b>Wasini Island</b>: il ponte di plastica riciclata delle donne e il ripristino dei coralli</li>
+  <li><b>Dada Mukubwa</b>: organizzazione femminista, educazione sessuale e violenza di genere</li></ul></div>
+ <div><b>West Pokot</b> · ASAL: acqua scarsa, agro-pastorale<ul>
+  <li><b>Acquedotto di 43 km</b>: le donne nel comitato dell'acqua, autorità o solo responsabilità?</li>
+  <li><b>Scuola secondaria femminile</b>: che cosa resta dopo la rottura della leadership</li>
+  <li><b>La fontana</b> accanto all'irrigazione: come viene usato il tempo liberato</li></ul></div>
+</div>`;
+
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const rot = i => ((i*37)%5-2)*0.6;
+let total = 10;
+const mins = s => s.w*total/10;
+const fmt = m => { const sec=Math.round(m*60); return Math.floor(sec/60)+":"+String(sec%60).padStart(2,"0"); };
+
+function noteHTML(n,i){
+  return `<div class="note c-${n.c}${n.wide?" wide":""}" style="--r:${rot(i)}deg">${n.tag?`<span class="tag">${n.tag}</span>`:""}${n.t?`<span class="t">${esc(n.t)}</span>`:""}${n.b?`<span class="b">${esc(n.b)}</span>`:""}</div>`;
+}
+function bodyHTML(s,stage){
+  let h = "";
+  if(s.notes.length) h += `<div class="wall${s.pairs?" pairs":""}">${s.notes.map(noteHTML).join("")}</div>`;
+  if(s.cases) h += CASES;
+  if(s.final) h += `<p class="final">${esc(s.final)}</p>`;
+  h += `<div class="keys">${s.keys.map(k=>`<span>${esc(k)}</span>`).join("")}</div>`;
+  h += `<div class="say"><h3>Cosa dire</h3><p>${esc(s.say)}</p></div>`;
+  if(s.bridge) h += `<p class="bridge">${esc(s.bridge)}</p>`;
+  if(s.authors) h += `<div class="authors">Autori da richiamare: ${s.authors}</div>`;
+  if(s.qa.length && !stage) h += `<details class="qa"><summary>Se ti chiedono…</summary><dl>${s.qa.map(([q,a])=>`<dt>${esc(q)}</dt><dd>${esc(a)}</dd>`).join("")}</dl></details>`;
+  return h;
+}
+
+function render(){
+  const th = document.getElementById("thread"), arc = document.getElementById("arc");
+  let h = "", a = "", lastAct = null;
+  STEPS.forEach((s,i)=>{
+    if(s.act!==lastAct){ h += `<div class="actlabel">${ACTS[s.act].t}<small>${ACTS[s.act].s}</small></div>`; a += `<span class="act">${ACTS[s.act].t.split(" · ")[1]}</span>`; lastAct=s.act; }
+    h += `<section class="step" id="${s.id}" aria-labelledby="h-${s.id}"><div class="num">${i+1}</div><div class="card">
+      <header><div><div class="guide">${esc(s.guide)}</div><h2 id="h-${s.id}">${esc(s.title)}</h2></div><span class="time">≈ ${fmt(mins(s))} min</span></header>
+      ${bodyHTML(s,false)}</div></section>`;
+    a += `<a href="#${s.id}" data-i="${i}"><span class="dot">${i+1}</span><span class="lbl">${s.short}</span></a>`;
+  });
+  th.innerHTML = h; arc.innerHTML = a;
+  observe();
+}
+
+let io;
+function observe(){
+  if(io) io.disconnect();
+  if(!("IntersectionObserver" in window)) return;
+  io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){
+      document.querySelectorAll("#arc a").forEach(x=>x.classList.toggle("on",x.getAttribute("href")==="#"+e.target.id));
+      const on=document.querySelector(`#arc a[href="#${e.target.id}"]`); if(on) on.scrollIntoView({block:"nearest",inline:"nearest"});
+    }});
+  },{rootMargin:"-40% 0px -55% 0px"});
+  document.querySelectorAll(".step").forEach(s=>io.observe(s));
+}
+
+/* preferenze per-visitatore */
+const store = {get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+function setKeys(on){
+  document.body.classList.toggle("keysonly",on);
+  document.getElementById("m-full").setAttribute("aria-pressed",!on);
+  document.getElementById("m-keys").setAttribute("aria-pressed",on);
+  store.set("discorso-keys",on?"1":"0");
+}
+document.getElementById("m-full").onclick=()=>setKeys(false);
+document.getElementById("m-keys").onclick=()=>setKeys(true);
+const dur = document.getElementById("dur");
+const savedDur = store.get("discorso-dur"); if(savedDur && dur.querySelector(`option[value="${savedDur}"]`)) dur.value=savedDur;
+total = +dur.value;
+dur.onchange=()=>{ total=+dur.value; store.set("discorso-dur",dur.value); render(); };
+
+/* presentazione */
+const stage=document.getElementById("stage"), sBody=document.getElementById("s-body"), sProg=document.getElementById("s-prog"), sClock=document.getElementById("s-clock"), sText=document.getElementById("s-text");
+let cur=0, t0=0, tick=null, showText=false, lastFocus=null;
+function show(i){
+  cur=Math.max(0,Math.min(STEPS.length-1,i));
+  const s=STEPS[cur];
+  sBody.innerHTML=`<div class="guide">${cur+1} / ${STEPS.length} · ${esc(ACTS[s.act].t)} · ${esc(s.guide)}</div><h2>${esc(s.title)}</h2>${bodyHTML(s,true)}`;
+  sBody.querySelectorAll(".say").forEach(el=>el.style.display=showText?"":"none");
+  sBody.scrollTop=0;
+  sProg.style.width=((cur+1)/STEPS.length*100)+"%";
+  document.getElementById("s-prev").disabled=cur===0;
+  document.getElementById("s-next").textContent=cur===STEPS.length-1?"Fine ✓":"Avanti →";
+  t0=Date.now(); upd();
+}
+function upd(){
+  const el=(Date.now()-t0)/60000, m=mins(STEPS[cur]);
+  sClock.textContent=`${fmt(el)} / ${fmt(m)}`;
+  sClock.classList.toggle("over",el>m);
+}
+function openStage(){ lastFocus=document.activeElement; stage.classList.add("open"); document.body.style.overflow="hidden"; show(cur); tick=setInterval(upd,1000); document.getElementById("s-next").focus(); }
+function closeStage(){ stage.classList.remove("open"); document.body.style.overflow=""; clearInterval(tick); const t=document.getElementById(STEPS[cur].id); if(t) t.scrollIntoView(); if(lastFocus) lastFocus.focus(); }
+document.getElementById("present").onclick=()=>{ cur=0; openStage(); };
+document.getElementById("s-close").onclick=closeStage;
+document.getElementById("s-prev").onclick=()=>show(cur-1);
+document.getElementById("s-next").onclick=()=>{ if(cur===STEPS.length-1) closeStage(); else show(cur+1); };
+sText.onclick=()=>{ showText=!showText; sText.setAttribute("aria-pressed",showText); sText.textContent=showText?"Nascondi testo":"Mostra testo"; sBody.querySelectorAll(".say").forEach(el=>el.style.display=showText?"":"none"); };
+document.addEventListener("keydown",e=>{
+  if(!stage.classList.contains("open")) return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"){ e.preventDefault(); if(cur<STEPS.length-1) show(cur+1); }
+  else if(e.key==="ArrowLeft"||e.key==="PageUp"){ e.preventDefault(); show(cur-1); }
+  else if(e.key==="Escape"){ closeStage(); }
+});
+/* swipe sul telefono */
+let sx=null;
+stage.addEventListener("touchstart",e=>{sx=e.touches[0].clientX},{passive:true});
+stage.addEventListener("touchend",e=>{ if(sx===null) return; const dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>70){ dx<0?(cur<STEPS.length-1&&show(cur+1)):show(cur-1);} sx=null; },{passive:true});
+
+render();
+setKeys(store.get("discorso-keys")==="1");
+</script>
+</body>
+</html>

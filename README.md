@@ -6,12 +6,14 @@ Due strumenti per prepararsi all'orale (Dottorato in Studi Internazionali, proge
 
 | Strumento | Su claude.ai (anche dal telefono) | File nel repository |
 |---|---|---|
+| 🧵 **Il filo del discorso** (mappa per presentare il progetto di dottorato) | sul sito | [docs/discorso-dottorato.html](docs/discorso-dottorato.html) |
 | 🗺️ **La porta dei post-it** (mappa concettuale) | [Apri la mappa](https://claude.ai/artifact/U9hCUTuKSyKjjoFjKBPTKW) | [docs/mappa-postit.html](docs/mappa-postit.html) |
 | 🎤 **Allenamento all'orale** (domande e punti deboli) | [Apri l'app](https://claude.ai/artifact/RuWx7KfvRMZrR8UZVdr5CR) | [docs/allenamento-orale.html](docs/allenamento-orale.html) |
 
 **Come sito web (GitHub Pages):** dopo aver attivato le Pages (*Settings → Pages → Branch: main, cartella /docs*), le pagine si aprono da qualsiasi browser, anche dal telefono e senza account:
 
 - https://vignini.github.io/sentiment/ (indice)
+- https://vignini.github.io/sentiment/discorso-dottorato.html (progetto di dottorato)
 - https://vignini.github.io/sentiment/mappa-postit.html
 - https://vignini.github.io/sentiment/allenamento-orale.html
 
@@ -29,6 +31,7 @@ Due strumenti per prepararsi all'orale (Dottorato in Studi Internazionali, proge
 ```
 docs/
   index.html              pagina indice (per GitHub Pages)
+  discorso-dottorato.html mappa narrativa per presentare il dottorato
   mappa-postit.html       mappa concettuale
   allenamento-orale.html  app per le domande
 presentazione/
