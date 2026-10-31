@@ -12,7 +12,7 @@
 :root{
   --bg:#efe9e2; --surface:#fbf8f4; --ink:#2a2420; --muted:#6d625a; --line:#cfc3b6;
   --thread:#c0392b;
-  --green:#c8ec6a; --blue:#7fd0f2; --yellow:#f6e7a1; --salmon:#f6b5a4; --lemon:#eef36a;
+  --green:#c8ec6a; --blue:#7fd0f2; --yellow:#f6e7a1; --salmon:#f6b5a4; --lemon:#eef36a; --lilac:#d9c6f2;
   --note-ink:#1f1a17; --focus:#1c6dd0; --mine:#0f6b63; --mine-bg:#e3f1ee;
   --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,sans-serif;
@@ -20,11 +20,11 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#1d1714; --surface:#29211d; --ink:#f1e9e2; --muted:#b5a79c; --line:#4a3d35; --thread:#e8705f;
-  --green:#b4d95a; --blue:#68bfe3; --yellow:#e8d98e; --salmon:#e7a090; --lemon:#d9de5a;
+  --green:#b4d95a; --blue:#68bfe3; --yellow:#e8d98e; --salmon:#e7a090; --lemon:#d9de5a; --lilac:#b9a3dd;
   --focus:#7db4ff; --mine:#6fd1c1; --mine-bg:#1d3532; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1d1714; --surface:#29211d; --ink:#f1e9e2; --muted:#b5a79c; --line:#4a3d35; --thread:#e8705f;
-  --green:#b4d95a; --blue:#68bfe3; --yellow:#e8d98e; --salmon:#e7a090; --lemon:#d9de5a;
+  --green:#b4d95a; --blue:#68bfe3; --yellow:#e8d98e; --salmon:#e7a090; --lemon:#d9de5a; --lilac:#b9a3dd;
   --focus:#7db4ff; --mine:#6fd1c1; --mine-bg:#1d3532; color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-padding-top:120px}
@@ -82,7 +82,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible{
 .note.small{flex:0 1 160px}
 .note .t{font-family:var(--hand);font-size:21px;line-height:1.1;margin-bottom:4px;display:block}
 .note .b{white-space:pre-line}
-.note.c-green{background:var(--green)} .note.c-blue{background:var(--blue)} .note.c-salmon{background:var(--salmon)} .note.c-lemon{background:var(--lemon)}
+.note.c-green{background:var(--green)} .note.c-blue{background:var(--blue)} .note.c-salmon{background:var(--salmon)} .note.c-lemon{background:var(--lemon)} .note.c-lilac{background:var(--lilac);outline:2px dashed rgba(0,0,0,.35);outline-offset:-6px}
 .note .tag{display:inline-block;font:700 11px var(--body);background:rgba(0,0,0,.12);border-radius:4px;padding:1px 6px;margin-bottom:4px}
 .cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (max-width:640px){.cases{grid-template-columns:1fr}}
@@ -131,7 +131,7 @@ body.keysonly .say{display:none}
     <a class="back" href="index.html">← Torna all'indice</a>
     <div class="eyebrow">Il mio progetto di dottorato, tappa per tappa</div>
     <h1>Il filo del discorso</h1>
-    <p class="lead"><i>Oltre la linearità del cambiamento: analisi del legame tra genere, clima e relazioni di potere nei cambiamenti emergenti in Kenya.</i> Questa mappa mette i post-it in fila nell'ordine in cui raccontarli. Per ogni tappa trovi cosa dire, le parole chiave da ricordare e la frase-ponte che porta alla tappa successiva.</p>
+    <p class="lead"><i>Oltre la linearità del cambiamento: analisi del legame tra genere, clima e relazioni di potere nei cambiamenti emergenti in Kenya.</i> Questa mappa mette i post-it in fila nell'ordine in cui raccontarli. Per ogni tappa trovi cosa dire, le parole chiave da ricordare e la frase-ponte che porta alla tappa successiva. I post-it <span style="background:var(--lilac);color:var(--note-ink);padding:0 6px;border-radius:3px">lilla tratteggiati</span> sono proposte da riscrivere con parole tue.</p>
   </div>
 
   <div class="pitch">
@@ -178,8 +178,9 @@ const ACTS = {
   percosa:{t:"Atto IV · Per che cosa",s:"Risultati e chiusura"}
 };
 const STEPS = [
-{id:"storia",act:"perche",short:"Storia",title:"La storia: West Pokot",guide:"Da dove parte tutto?",w:1.25,
- notes:[{c:"salmon",t:"West Pokot",b:"→ impianto di irrigazione come fallimento?"}],
+{id:"storia",act:"perche",short:"Storia",title:"La storia: West Pokot",guide:"Da dove parte tutto?",w:1,
+ notes:[{c:"salmon",t:"West Pokot",b:"→ impianto di irrigazione come fallimento?"},
+  {c:"lilac",tag:"proposta",t:"Ma non è stato abbandonato",b:"pascolo · fontana · uno spazio delle donne\n→ il cambiamento è emerso altrove"}],
  say:"Parto da un'esperienza concreta. A West Pokot, in Kenya, con la ONG con cui lavoravo abbiamo realizzato un impianto di irrigazione di 36 ettari finanziato dall'Unione Europea. Più di duecento persone sono state formate e hanno ricevuto un appezzamento: secondo il quadro logico, la comunità avrebbe prodotto da sola il proprio cibo. L'impianto non è mai stato usato per coltivare. Eppure non è stato abbandonato: l'acqua faceva crescere erba per il pascolo, e la fontana e l'abbeveratoio, pensati come componenti secondarie, sono diventati uno spazio usato dalle donne, con nuove forme di socialità. Per il PCM è un fallimento. La domanda che mi porto dietro è: è davvero un fallimento, o è un cambiamento che i nostri strumenti non sanno vedere?",
  keys:["36 ettari, fondi UE","mai usato per coltivare","pascolo","fontana e donne","fallimento?"],
  authors:"Hirschman (gli imprevisti attivano risorse nascoste)",
@@ -190,7 +191,8 @@ const STEPS = [
  notes:[
   {c:"yellow",t:"Da cosa nasce?",b:"→ dalla critica della linearità del cambiamento\n→ vs complessità del contesto\n→ dalla realtà formale dei documenti alla \"realtà del progetto\"\n→ la ricerca intende spostare l'attenzione dai risultati programmati alle pratiche attraverso cui gli interventi vengono interpretati dagli attori, e agli effetti inattesi"},
   {c:"yellow",t:"Agenda 2030",b:"17 obiettivi · 169 target · un sistema globale di indicatori\n→ solo il 35% dei target è in linea\n→ il 18% è peggiorato"},
-  {c:"yellow",t:"La cooperazione, presa troppo dal programmare e pianificare…",b:"…magari si è scordata il ruolo del\n① contesto  ② tempo  ③ relazioni"}],
+  {c:"yellow",t:"La cooperazione, presa troppo dal programmare e pianificare…",b:"…magari si è scordata il ruolo del\n① contesto  ② tempo  ③ relazioni"},
+  {c:"lilac",tag:"proposta",t:"Il tempo",b:"lo stesso intervento sembra efficace o fallimentare a seconda di quando lo guardi (Woolcock)"}],
  say:"La cooperazione ha affinato sempre di più la capacità di pianificare. Il Project Cycle Management, con il quadro logico, rappresenta il cambiamento come una catena lineare: attività, risultati, obiettivi, impatto. L'Agenda 2030 è l'espressione più ampia di questa tendenza: 17 obiettivi, 169 target, un sistema globale di indicatori. Eppure, a cinque anni dalla scadenza, solo il 35% dei target è in traiettoria positiva e il 18% è peggiorato. Non dico che pianificare sia inutile: il PCM rende esplicite le ipotesi. Dico che, pianificando con sempre più precisione, la cooperazione rischia di perdere di vista tre cose: il contesto, il tempo e le relazioni. Per questo la ricerca sposta l'attenzione dai risultati programmati alle pratiche con cui gli attori interpretano gli interventi, e agli effetti inattesi che ne nascono.",
  keys:["PCM = catena lineare","Agenda 2030: 35% · 18%","contesto · tempo · relazioni","dai risultati alle pratiche"],
  authors:"<b>Long</b> (contesto) · <b>Woolcock</b> (tempo) · <b>Saggiomo</b> (relazioni) · Mosse (progetto scritto e progetto vissuto)",
@@ -202,8 +204,16 @@ const STEPS = [
  say:"La domanda centrale ha due metà. La prima è conoscitiva: come emerge il cambiamento. La seconda è operativa: come riconoscerlo e accompagnarlo mentre sta avvenendo, non solo a posteriori. E chiama in causa sia gli strumenti, come il PCM, sia gli attori: cooperanti, comunità, istituzioni.",
  keys:["emerge","riconosciuto","accompagnato","strumenti e attori"],
  authors:"Hirschman, Woolcock (il cambiamento non è lineare)",
- bridge:"Per rispondere, la domanda si articola in tre sotto-domande, e ognuna diventa un obiettivo.",
+ bridge:"Per rispondere mi appoggio a cinque filoni teorici, che di solito non si parlano.",
  qa:[["Perché dici \"emerge\" e non \"viene prodotto\"?","Perché il cambiamento non deriva automaticamente dalla sequenza delle attività: nasce dall'incontro tra l'intervento e il contesto, spesso in direzioni non previste."]]},
+
+{id:"teoria",act:"cosa",short:"Teoria",title:"Il quadro teorico",guide:"Su quali spalle mi appoggio?",w:.75,
+ notes:[{c:"lilac",wide:true,tag:"proposta",t:"Cinque filoni in dialogo",b:"① complessità: Hirschman, Woolcock, PDIA, Morin\n② attori e mediazione: Long, Mosse\n③ riconoscere il cambiamento: Stame, Saggiomo\n④ potere ed epistemologia: Ferguson, Escobar, Ndlovu-Gatsheni, Chilisa\n⑤ genere: Mohanty, Tamale, Arora-Jonsson, Maathai"}],
+ say:"Il quadro teorico mette in dialogo cinque filoni. Il primo è la complessità: Hirschman e Woolcock spiegano perché il piano è fallibile e il cambiamento non è lineare; la PDIA propone di adattarsi per piccoli passi; Morin dà la cornice epistemologica. Il secondo sono gli attori: per Long il cambiamento emerge nelle interfacce sociali, e Mosse mostra che la coerenza del progetto viene costruita a posteriori. Il terzo riguarda come riconoscere il cambiamento: Stame usa dubbio e sorpresa, Saggiomo indica nel sentiment, cioè motivazioni, relazioni, spazi e creatività, dove guardare. Il quarto è il potere: Ferguson ed Escobar mostrano il potere incorporato nelle categorie dello sviluppo, Ndlovu-Gatsheni e Chilisa fanno della decolonialità una pratica. Il quinto è il genere: Mohanty, Tamale e Arora-Jonsson evitano di trattare le donne come un gruppo omogeneo, e Maathai porta il discorso in Kenya.",
+ keys:["complessità","attori e mediazione","riconoscere il cambiamento","potere ed epistemologia","genere"],
+ authors:"Tutti, raggruppati per filone: il dettaglio è nella mappa dei post-it",
+ bridge:"Da questo dialogo la domanda centrale si scompone in tre sotto-domande, e ognuna diventa un obiettivo.",
+ qa:[["Non sono troppi autori?","Sono raggruppati in cinque filoni con un ruolo preciso ciascuno. Il contributo sta proprio nel farli lavorare insieme durante l'implementazione, invece che separati."]]},
 
 {id:"obiettivi",act:"cosa",short:"Obiettivi",title:"Tre sotto-domande, tre obiettivi",guide:"Come la scompongo?",w:1.25,pairs:true,
  notes:[
@@ -230,11 +240,12 @@ const STEPS = [
  bridge:"Per farlo serve guardare il cambiamento da vicino, in contesti precisi.",
  qa:[["Esistono già approcci adattivi, come la PDIA. Che cosa c'è di nuovo?","La PDIA è pensata soprattutto per le capacità istituzionali. Resta aperto come riconoscere e registrare le trasformazioni emergenti a livello comunitario e portarle nelle decisioni senza ricondurle per forza agli indicatori iniziali, tenendo dentro il potere e il genere."]]},
 
-{id:"casi",act:"come",short:"Casi",title:"Dove: sei casi in Kenya",guide:"Dove e che cosa osservo?",w:1.25,
+{id:"casi",act:"come",short:"Casi",title:"Dove: sei casi in Kenya",guide:"Dove e che cosa osservo?",w:1,
  notes:[
   {c:"salmon",t:"6 casi",b:"3 Kwale · 3 West Pokot\n→ caratterizzati da crisi climatica e disuguaglianza di genere"},
   {c:"salmon",t:"Visitati in diversi periodi",b:"→ tutti sono stati toccati, o saranno toccati, da progetti della cooperazione internazionale"},
-  {c:"salmon",t:"Unità di analisi",b:"la traiettoria del cambiamento"}],
+  {c:"salmon",t:"Unità di analisi",b:"la traiettoria del cambiamento"},
+  {c:"lilac",tag:"proposta",t:"Perché clima e genere",b:"alta densità causale\n+ il clima moltiplica le disuguaglianze di genere\n(123 anni alla parità, WEF 2025)"}],
  cases:true,
  say:"La ricerca si svolge in Kenya, in due sistemi socio-ecologici diversi: Kwale, sulla costa, dove si intrecciano pesca, turismo, conservazione e giustizia fondiaria, e West Pokot, un territorio arido e agro-pastorale. Sei casi, tre per contea, tutti all'incrocio tra crisi climatica e disuguaglianza di genere. Li osservo in momenti diversi: alcuni progetti sono conclusi, altri in corso, altri potranno ricevere fondi. Così vedo cosa succede quando un intervento entra o esce da un sistema di relazioni. E l'unità di analisi non è il progetto, ma la traiettoria del cambiamento che lo attraversa.",
  keys:["Kwale (costa) · West Pokot (ASAL)","6 casi","clima × genere","prima, durante, dopo","traiettorie, non progetti"],
@@ -243,13 +254,14 @@ const STEPS = [
  qa:[["Perché proprio clima e genere?","Sono interventi ad alta densità causale, dove la linearità del quadro logico è meno plausibile. E la posta in gioco è alta: il cambiamento climatico moltiplica le disuguaglianze di genere."],
      ["Il tuo lavoro passato in quei luoghi non è un limite?","È una risorsa per l'accesso al campo, e diventa oggetto di riflessività: osservo come la mia presenza influenza le relazioni."]]},
 
-{id:"metodo",act:"come",short:"Metodo",title:"Come: l'approccio metodologico",guide:"Con quale sguardo osservo?",w:1.25,
+{id:"metodo",act:"come",short:"Metodo",title:"Come: l'approccio metodologico",guide:"Con quale sguardo osservo?",w:1,
  notes:[
   {c:"green",t:"Approccio metodologico",b:"① qualitativo\n② comparativo\n③ longitudinale\n④ partecipativo"},
   {c:"green",t:"Etnografia impegnata",b:"la ricercatrice non si presenta come osservatrice esterna e neutrale, ma partecipa alla vita quotidiana e alle attività delle persone con cui lavora, e studia come la propria presenza influenzi le relazioni"},
   {c:"green",t:"Ricerca-azione partecipativa",b:"conoscere la realtà insieme a chi la vive, intervenendo su di essa e imparando dall'azione: comunità e ricercatrice producono conoscenza e sperimentano insieme un cambiamento"},
   {c:"yellow",t:"Intersezionalità come prospettiva",b:""},
-  {c:"yellow",t:"Decolonialità come pratica",b:""}],
+  {c:"yellow",t:"Decolonialità come pratica",b:""},
+  {c:"lilac",tag:"proposta",t:"Il mio posizionamento",b:"cinque anni in Kenya: una risorsa per l'accesso, ma anche oggetto di riflessività"}],
  say:"L'approccio è qualitativo, perché cerco relazioni, pratiche e significati; comparativo, tra casi e territori; longitudinale, perché segue le trasformazioni nel tempo; partecipativo, perché gli attori contribuiscono sia a produrre le informazioni sia a sperimentare il framework. Integro l'etnografia impegnata, cioè una presenza prolungata dall'interno con una posizione esplicita, e la ricerca-azione partecipativa, in cui comunità e ricerca producono conoscenza e sperimentano insieme. Due lenti attraversano tutto: l'intersezionalità come prospettiva, perché le comunità non sono omogenee; e la decolonialità come pratica, non come etichetta, cioè redistribuire l'autorità di definire e interpretare.",
  keys:["qualitativo · comparativo · longitudinale · partecipativo","etnografia impegnata","ricerca-azione","intersezionalità = prospettiva","decolonialità = pratica"],
  authors:"<b>Chilisa</b>, Ndlovu-Gatsheni (decolonialità) · Mohanty, Tamale, Arora-Jonsson (intersezionalità) · Morin (l'osservatore fa parte di ciò che osserva)",
@@ -259,7 +271,8 @@ const STEPS = [
 {id:"dati",act:"come",short:"Dati",title:"Produzione e analisi dei dati",guide:"Con quali passi?",w:.5,
  notes:[
   {c:"blue",t:"5 fasi",b:"i) analisi documentale dei progetti\nii) ingresso nei contesti e definizione delle prime domande e metodologie\niii) osservazione partecipante e interviste semi-strutturate"},
-  {c:"blue",b:"iv) ritorni periodici sul campo e sperimentazione del framework\nv) fase conclusiva di restituzione e interpretazione con la comunità"}],
+  {c:"blue",b:"iv) ritorni periodici sul campo e sperimentazione del framework\nv) fase conclusiva di restituzione e interpretazione con la comunità"},
+  {c:"lilac",tag:"proposta",t:"Tempi e limiti",b:"3 + 6 + 3 mesi di campo\n→ il framework avrà una prima sperimentazione, non una prova di validità generale"}],
  say:"Cinque fasi. Analisi documentale, per ricostruire il cambiamento previsto dai progetti. Ingresso nei contesti e definizione partecipata delle prime domande del framework. Osservazione partecipante e interviste semi-strutturate, da 15 a 20 per caso, con 2 o 3 focus group divisi per genere, età e accesso alle risorse, insieme a un diario riflessivo. Ritorni periodici per seguire i casi e sperimentare il framework. Infine restituzione e interpretazione condivisa con le comunità. L'analisi è tematica, processuale e comparativa: confronto il cambiamento previsto, osservato e percepito.",
  keys:["documenti","ingresso","osservazione + interviste + diario","ritorni","restituzione","previsto · osservato · percepito"],
  authors:"Saggiomo (diario e segnali deboli) · Chilisa (laboratori partecipativi)",
