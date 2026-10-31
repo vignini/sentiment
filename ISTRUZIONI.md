@@ -63,6 +63,18 @@ Premi **Ripasso**: il testo dei post-it e dei riquadri diventa sfocato.
 
 ---
 
+## 2b. Il filo del discorso (presentare il progetto)
+
+Pagina `discorso-dottorato.html`: i post-it sul progetto di dottorato messi in fila nell'ordine in cui raccontarli, in 12 tappe e 4 atti (Perché, Che cosa, Come, Per che cosa).
+
+- Per ogni tappa: i post-it, **Cosa dire**, le parole chiave, la **frase-ponte** verso la tappa successiva, gli autori da richiamare e **Se ti chiedono…**.
+- I post-it **lilla tratteggiati** sono proposte di Claude: riscrivili con parole tue.
+- **Durata**: 5, 10, 15 o 20 minuti; il tempo si divide tra le tappe.
+- **Presenta**: una tappa alla volta (frecce, swipe o Avanti), con un timer che diventa rosso se sfori. **Mostra testo** fa comparire il testo da dire.
+- **Solo parole chiave**: nasconde il testo per provare il discorso a memoria.
+
+Nell'app di allenamento c'è l'area **Il filo del discorso**, con domande e punti deboli costruiti su questa mappa.
+
 ## 3. Dal telefono
 
 - I filtri e le sotto-domande **scorrono di lato** con il dito.

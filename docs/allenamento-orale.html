@@ -101,9 +101,9 @@ button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 </div>
 
 <script>
-const PC={mohanty:"--green",hirschman:"--green",woolcock:"--green",long:"--green",mosse:"--blue",stame:"--salmon",saggiomo:"--blue",ferguson:"--blue",escobar:"--yellow",ndlovu:"--salmon",chilisa:"--salmon",tamale:"--yellow",arora:"--blue",maathai:"--salmon",kenya2:"--blue",morin:"--orange",domande:"--yellow"};
+const PC={mohanty:"--green",hirschman:"--green",woolcock:"--green",long:"--green",mosse:"--blue",stame:"--salmon",saggiomo:"--blue",ferguson:"--blue",escobar:"--yellow",ndlovu:"--salmon",chilisa:"--salmon",tamale:"--yellow",arora:"--blue",maathai:"--salmon",kenya2:"--blue",morin:"--orange",domande:"--yellow",dY:"--yellow",dG:"--green",dB:"--blue",dS:"--salmon"};
 const SQL={1:"SQ1 Relazioni",2:"SQ2 Potere",3:"SQ3 Ecological Framework"};
-const AREAS={progetto:"Il progetto",teoria:"Teoria",metodo:"Metodo",etica:"Posizionamento ed etica",ef:"Ecological Framework"};
+const AREAS={progetto:"Il progetto",teoria:"Teoria",metodo:"Metodo",etica:"Posizionamento ed etica",ef:"Ecological Framework",discorso:"Il filo del discorso"};
 
 // c: post-it da citare [autore, testo]
 const QS=[
@@ -173,6 +173,38 @@ const QS=[
   c:[["woolcock","PDIA"]]},
  {id:"f3",area:"ef",sq:[3],q:"È fattibile in tre anni?",
   a:["Campo distribuito: 3 mesi il primo anno, 6 il secondo in due periodi, 3 il terzo.","Il framework si costruisce insieme ai dati e viene finalizzato il terzo anno.","Obiettivo realistico: una prima sperimentazione su comprensibilità e utilità, non la dimostrazione di un'applicabilità generale.","Reti già attive (CEFA, COIKE) e inserimento nel progetto Eco-Log."],c:[]},
+ {id:"d1",area:"discorso",sq:[1,2,3],q:"Qual è la sua domanda di ricerca? Perché la divide in due parti?",
+  a:["Come emerge il cambiamento nei processi di cooperazione internazionale e come può essere riconosciuto e accompagnato dagli strumenti e dagli attori attraverso cui essa opera?","La prima metà è conoscitiva: come emerge il cambiamento.","La seconda è operativa: come riconoscerlo e accompagnarlo mentre avviene, non solo a posteriori.","Chiama in causa sia gli strumenti (il PCM) sia gli attori (cooperanti, comunità, istituzioni)."],
+  c:[["dY","Come emerge il cambiamento nei processi di cooperazione internazionale…"]]},
+ {id:"d2",area:"discorso",sq:[1,2,3],q:"Come si collegano sotto-domande, obiettivi ed Ecological Framework?",
+  a:["SQ1 relazioni e pratiche → obiettivo 1: comprendere come il cambiamento prende forma.","SQ2 rapporti di potere → obiettivo 2: analizzarli, sia come risorse e autorità sia come potere di definire problemi e soluzioni.","SQ3 strumenti nuovi → obiettivo 3: elaborare e sperimentare una metodologia operativa.","Le risposte alle prime due sono la base empirica del framework: la terza le traduce in uno strumento."],
+  c:[["dG","In che modo le relazioni e le pratiche… fanno emergere il cambiamento?"],["dB","Analizzare le trasformazioni nei rapporti di potere"],["dB","Elaborare e sperimentare una metodologia operativa"]]},
+ {id:"d3",area:"discorso",sq:[1],q:"Perché cita l'Agenda 2030?",
+  a:["È l'espressione più articolata della tendenza a programmare: 17 obiettivi, 169 target, un sistema globale di indicatori.","Eppure a cinque anni dalla scadenza solo il 35% dei target è in traiettoria positiva e il 18% è peggiorato (UN, SDG Report 2025).","Sui miei due assi: 123 anni alla parità di genere (WEF 2025); le famiglie rurali povere perdono il 5% del reddito per stress termico (FAO 2024).","Non è un argomento contro la pianificazione: mostra la distanza tra cambiamento pianificato e raggiunto."],
+  c:[["dY","Agenda 2030: solo il 35% dei target è in linea, il 18% è peggiorato"]]},
+ {id:"d4",area:"discorso",sq:[1,2],q:"Dice che la cooperazione ha dimenticato contesto, tempo e relazioni. Che cosa intende?",
+  a:["Contesto (Long): gli interventi sono arene sociali, interpretati e rinegoziati nelle interfacce tra attori.","Tempo (Woolcock 2009): il cambiamento ha curve diverse, e lo stesso intervento può sembrare efficace o fallimentare a seconda di quando lo si guarda.","Relazioni (Saggiomo): motivazioni, fiducia, spazi e creatività sostengono l'azione collettiva.","Pianificando con sempre più precisione, il PCM rischia di mettere in secondo piano proprio queste tre dimensioni."],
+  c:[["dY","…si è scordata il ruolo del ① contesto ② tempo ③ relazioni"]]},
+ {id:"d5",area:"discorso",sq:[1,2,3],q:"Mi riassume il quadro teorico?",
+  a:["Cinque filoni, di solito separati, che metto in dialogo.","Complessità: Hirschman, Woolcock, PDIA, Morin. Attori e mediazione: Long, Mosse.","Riconoscere il cambiamento: Stame (dubbio e sorpresa), Saggiomo (sentiment).","Potere ed epistemologia: Ferguson, Escobar, Ndlovu-Gatsheni, Chilisa. Genere: Mohanty, Tamale, Arora-Jonsson, Maathai.","Il contributo sta nel farli lavorare insieme durante l'implementazione."],
+  c:[["dS","Contributo originale: collegare la comprensione del cambiamento… alla costruzione di una metodologia operativa"]]},
+ {id:"d6",area:"discorso",sq:[1,2,3],q:"Perché un approccio qualitativo, comparativo, longitudinale e partecipativo?",
+  a:["Qualitativo: cerco relazioni, pratiche e significati, non frequenze.","Comparativo: tra casi e tra due territori, per riconoscere pattern senza cancellare le differenze.","Longitudinale: le traiettorie si vedono solo nel tempo, con i ritorni sul campo.","Partecipativo: gli attori producono le informazioni e sperimentano il framework con me."],
+  c:[["dG","① qualitativo ② comparativo ③ longitudinale ④ partecipativo"]]},
+ {id:"d7",area:"discorso",sq:[1,3],q:"Che differenza c'è tra etnografia impegnata e ricerca-azione partecipativa?",
+  a:["Etnografia impegnata: presenza prolungata dall'interno, con una posizione esplicita, osservando anche come la propria presenza influenza le relazioni.","Ricerca-azione partecipativa: conoscere la realtà insieme a chi la vive, intervenendo e imparando dall'azione; comunità e ricerca producono conoscenza e sperimentano insieme.","La prima serve soprattutto a comprendere (SQ1 e SQ2), la seconda a costruire e sperimentare il framework (SQ3).","Nota: quest'ultimo collegamento l'ho proposto io, verifica se ti convince."],
+  c:[["dG","Etnografia impegnata"],["dG","Ricerca-azione partecipativa"]]},
+ {id:"d8",area:"discorso",sq:[2],q:"Intersezionalità come prospettiva, decolonialità come pratica: perché questa distinzione?",
+  a:["L'intersezionalità è una lente: genere, età, condizione economica, territorio e accesso alle risorse cambiano chi partecipa, decide e beneficia.","La decolonialità riguarda ciò che si fa: chi definisce le domande, rivede le categorie e interpreta i risultati.","In pratica: laboratori partecipativi per rivedere le categorie e restituzione condivisa (Chilisa).","Non un'etichetta teorica, ma una pratica continua e incompleta di redistribuzione dell'autorità epistemica."],
+  c:[["dY","Intersezionalità come prospettiva"],["dY","Decolonialità come pratica"]]},
+ {id:"d9",area:"discorso",sq:[1,2,3],q:"Quali sono le fasi della produzione dei dati?",
+  a:["i) Analisi documentale: ricostruire il cambiamento previsto dai progetti.","ii) Ingresso nei contesti e definizione partecipata delle prime domande del framework.","iii) Osservazione partecipante, 15-20 interviste per caso, 2-3 focus group differenziati, diario riflessivo.","iv) Ritorni periodici e sperimentazione del framework. v) Restituzione e interpretazione condivisa.","Analisi tematica, processuale e comparativa: cambiamento previsto, osservato e percepito."],
+  c:[["dB","5 fasi"]]},
+ {id:"d10",area:"discorso",sq:[1,2,3],q:"Quali risultati si aspetta?",
+  a:["Piano empirico: le traiettorie del cambiamento, le trasformazioni di potere e l'intreccio tra genere e clima.","Piano teorico: ampliare la Sentiment Evaluation oltre la diaspora e portarla dalla valutazione all'implementazione.","Piano metodologico: contribuire all'Ecological Framework di Eco-Log, con un toolkit sulla leadership.","Ricaduta: uno strumento per gli operatori, per capire che cosa sta cambiando e adattare le decisioni."],
+  c:[["dG","Piano teorico → ampliare la Sentiment Evaluation"],["dG","Ricaduta applicativa"]]},
+ {id:"d11",area:"discorso",sq:[3],q:"Se dovesse chiudere con una domanda, quale sarebbe?",
+  a:["Che cosa sta cambiando, per chi, attraverso quali relazioni, secondo l'interpretazione di chi, con quali effetti e rapporti di potere, e come può il progetto adattarsi mentre il cambiamento sta ancora avvenendo?","È la domanda che l'Ecological Framework dovrebbe aiutare a porsi di continuo.","Tornare alla fontana di West Pokot: con lo strumento sarebbe stata un segnale da riconoscere, non una nota a margine di un fallimento."],c:[]},
 ];
 
 const WS=[
@@ -198,6 +230,11 @@ const WS=[
  {id:"w8",area:"progetto",sq:[1,2],q:"Non sta riscrivendo un fallimento come successo?",crit:"Applichiamo Mosse a lei: rileggere l'impianto di West Pokot come \"cambiamento emergente\" è un'altra costruzione a posteriori.",
   a:["Non voglio salvare il progetto: voglio vedere cosa è cambiato, anche in negativo.","Chiedo chi ha l'autorità di definire successo e fallimento, compresa la mia.","Il ritorno sul campo serve a verificare se la fontana ha davvero prodotto trasformazioni significative per chi la usa."],
   c:[["mosse","Il successo di un progetto è una costruzione a posteriori"],["domande","② Chi può definire cos'è cambiamento?"]]},
+ {id:"w9",area:"discorso",sq:[1],q:"Traiettoria invece di risultato: non è solo un cambio di nome?",crit:"Chiamare \"traiettoria\" ciò che il PCM chiama outcome può sembrare un'operazione lessicale.",
+  a:["Un risultato si misura rispetto a un obiettivo fissato prima; una traiettoria si ricostruisce nel tempo, anche prima e dopo il progetto.","Per questo l'unità di analisi non è il progetto ma la traiettoria che lo attraversa (Woolcock 2009).","Uso le traiettorie note come piste iniziali, non come nuovi indicatori: cerco pattern senza cancellare le differenze di contesto."],
+  c:[["dS","Unità di analisi: traiettoria del cambiamento"]]},
+ {id:"w10",area:"discorso",sq:[1,3],q:"Dodici mesi di campo per sei casi: non sono pochi?",crit:"Circa due mesi per caso sembrano pochi per un'etnografia e per sperimentare uno strumento.",
+  a:["Il campo è distribuito in tre anni: i ritorni periodici sono parte del disegno longitudinale, non un limite.","Conosco già i contesti e molti attori: l'accesso è più rapido (CEFA, COIKE, cinque anni nel Paese).","Collaboratori locali per inglese, Kiswahili e lingua pokot.","La selezione definitiva dei casi avviene il primo anno: privilegio la profondità, e posso ridurre il numero se serve."],c:[]},
 ];
 
 // ---------- stato ----------
